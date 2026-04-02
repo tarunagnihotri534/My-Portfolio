@@ -300,7 +300,7 @@ function App() {
               <span className="projects-pill">Contact</span>
               <h2 className="projects-mega-title">Get in Touch</h2>
               <p className="contact-text">
-                Would you like to get in touch? Just shoot me an <strong><a href="mailto:tarunagnihotri534@gmail.com">email here</a></strong> or contact me at <strong>9369803059</strong> and I'll respond you, surely.
+                Would you like to get in touch? Just shoot me an email at <strong><a href="mailto:tarunagnihotri534@gmail.com">tarunagnihotri534@gmail.com</a></strong> or contact me at <strong>9369803059</strong> and I'll respond you, surely.
               </p>
             </div>
           </ScrollReveal>
