@@ -1,0 +1,723 @@
+/* ===================================================
+   DESIGN TOKENS & CSS VARIABLES
+   =================================================== */
+:root {
+    /* Colors - Light Mode */
+    --bg-primary: #f3f6fb;
+    --bg-secondary: #ffffff;
+    --text-primary: #1a1a2e;
+    --text-secondary: #555770;
+    --text-muted: #8b8da3;
+    --accent: #4361ee;
+    --accent-hover: #3a56d4;
+    --border-color: rgba(0, 0, 0, 0.06);
+    --vignette-color: rgba(67, 97, 238, 0.12);
+    --dock-bg: rgba(255, 255, 255, 0.82);
+    --dock-border: rgba(0, 0, 0, 0.08);
+    --dock-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+    --card-bg: rgba(255, 255, 255, 0.6);
+    --skill-bg: rgba(255, 255, 255, 0.7);
+    --hero-link-bg: rgba(0, 0, 0, 0.04);
+    --hero-link-hover-bg: rgba(67, 97, 238, 0.08);
+    --work-logo-bg: #f0f2f8;
+    --marquee-fade: linear-gradient(90deg, var(--bg-primary) 0%, transparent 15%, transparent 85%, var(--bg-primary) 100%);
+
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    --font-size-xs: 0.75rem;
+    --font-size-sm: 0.875rem;
+    --font-size-base: 1rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.25rem;
+    --font-size-2xl: 1.5rem;
+    --font-size-3xl: 2rem;
+    --font-size-hero: clamp(2.5rem, 5vw, 4rem);
+
+    /* Spacing */
+    --container-max: 750px;
+    --section-gap: 4rem;
+
+    /* Transitions */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Border Radius */
+    --radius-sm: 8px;
+    --radius-md: 12px;
+    --radius-lg: 16px;
+    --radius-xl: 24px;
+    --radius-full: 9999px;
+}
+
+/* Dark Mode */
+[data-theme="dark"] {
+    --bg-primary: #0f0f1a;
+    --bg-secondary: #1a1a2e;
+    --text-primary: #e8e8f0;
+    --text-secondary: #a0a0b8;
+    --text-muted: #6b6b80;
+    --accent: #6c83f7;
+    --accent-hover: #8da0ff;
+    --border-color: rgba(255, 255, 255, 0.06);
+    --vignette-color: rgba(108, 131, 247, 0.08);
+    --dock-bg: rgba(26, 26, 46, 0.88);
+    --dock-border: rgba(255, 255, 255, 0.08);
+    --dock-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --card-bg: rgba(26, 26, 46, 0.5);
+    --skill-bg: rgba(26, 26, 46, 0.7);
+    --hero-link-bg: rgba(255, 255, 255, 0.05);
+    --hero-link-hover-bg: rgba(108, 131, 247, 0.12);
+    --work-logo-bg: #1e1e36;
+    --marquee-fade: linear-gradient(90deg, var(--bg-primary) 0%, transparent 15%, transparent 85%, var(--bg-primary) 100%);
+}
+
+/* ===================================================
+   RESET & BASE STYLES
+   =================================================== */
+*, *::before, *::after {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+    font-family: var(--font-family);
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.7;
+    font-size: var(--font-size-base);
+    overflow-x: hidden;
+    transition: background-color var(--transition-slow), color var(--transition-slow);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+ul {
+    list-style: none;
+}
+
+/* ===================================================
+   VIGNETTE OVERLAY
+   =================================================== */
+.vignette {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    box-shadow:
+        inset 0 0 120px 40px var(--vignette-color),
+        inset 0 0 300px 100px rgba(67, 97, 238, 0.04);
+    transition: box-shadow var(--transition-slow);
+}
+
+[data-theme="dark"] .vignette {
+    box-shadow:
+        inset 0 0 120px 40px var(--vignette-color),
+        inset 0 0 300px 100px rgba(108, 131, 247, 0.02);
+}
+
+/* ===================================================
+   CONTAINER
+   =================================================== */
+.container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 6rem 1.5rem 8rem;
+    position: relative;
+    z-index: 2;
+}
+
+/* ===================================================
+   HERO SECTION
+   =================================================== */
+.hero {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-bottom: var(--section-gap);
+    padding-top: 2rem;
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.hero-name {
+    font-size: var(--font-size-hero);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    margin-bottom: 1.25rem;
+    color: var(--text-primary);
+}
+
+.hero-tagline {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 1.5rem;
+}
+
+.hero-tagline strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+.hero-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    width: fit-content;
+}
+
+.hero-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1rem;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    background: var(--hero-link-bg);
+    transition: all var(--transition-base);
+    border-right: 1px solid var(--border-color);
+    white-space: nowrap;
+}
+
+.hero-link:last-child {
+    border-right: none;
+}
+
+.hero-link:hover {
+    background: var(--hero-link-hover-bg);
+    color: var(--accent);
+}
+
+.hero-link svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+}
+
+.hero-link:hover svg {
+    opacity: 1;
+}
+
+.hero-avatar {
+    flex-shrink: 0;
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--border-color);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    transition: transform var(--transition-base), box-shadow var(--transition-base);
+}
+
+.hero-avatar:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 32px rgba(67, 97, 238, 0.2);
+}
+
+.hero-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* ===================================================
+   SECTIONS
+   =================================================== */
+.section {
+    margin-bottom: var(--section-gap);
+}
+
+.section-title {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+}
+
+/* ===================================================
+   ABOUT
+   =================================================== */
+.about-text {
+    font-size: var(--font-size-base);
+    color: var(--text-secondary);
+    line-height: 1.8;
+}
+
+.about-text strong {
+    color: var(--text-primary);
+    font-weight: 600;
+}
+
+/* ===================================================
+   WORK EXPERIENCE
+   =================================================== */
+.work-item {
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.work-item:last-child {
+    border-bottom: none;
+}
+
+.work-header {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.work-logo {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-md);
+    background: var(--work-logo-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--accent);
+    transition: background var(--transition-base);
+}
+
+.work-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.work-company {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.work-role {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+}
+
+.work-date {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.work-details {
+    padding-left: 4rem;
+}
+
+.work-details li {
+    position: relative;
+    padding-left: 1.25rem;
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.7;
+    margin-bottom: 0.35rem;
+}
+
+.work-details li::before {
+    content: '◦';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--text-muted);
+    font-size: var(--font-size-sm);
+}
+
+/* ===================================================
+   SKILLS - MARQUEE ANIMATION
+   =================================================== */
+.skills-marquee-wrapper {
+    margin-bottom: 2rem;
+    position: relative;
+}
+
+.skills-marquee-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--marquee-fade);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.skills-marquee {
+    overflow: hidden;
+    width: 100%;
+}
+
+.skills-track {
+    display: flex;
+    gap: 2.5rem;
+    animation: marquee-left 25s linear infinite;
+    width: max-content;
+}
+
+.skills-track-reverse {
+    animation: marquee-right 20s linear infinite;
+}
+
+@keyframes marquee-left {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes marquee-right {
+    0% {
+        transform: translateX(-50%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+
+.skills-marquee:hover .skills-track {
+    animation-play-state: paused;
+}
+
+.skill-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.625rem;
+    padding: 1.25rem;
+    min-width: 90px;
+    background: var(--skill-bg);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--border-color);
+    transition: all var(--transition-base);
+    cursor: default;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+.skill-item:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(67, 97, 238, 0.12);
+    border-color: var(--accent);
+}
+
+.skill-item img,
+.skill-item svg.rest-api-icon {
+    width: 48px;
+    height: 48px;
+    transition: transform var(--transition-base);
+}
+
+.skill-item:hover img,
+.skill-item:hover svg.rest-api-icon {
+    transform: scale(1.12) rotate(3deg);
+}
+
+.skill-item span {
+    font-size: var(--font-size-xs);
+    font-weight: 500;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+/* ===================================================
+   PROJECTS
+   =================================================== */
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+}
+
+.project-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: all var(--transition-base);
+}
+
+.project-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(67, 97, 238, 0.1);
+    border-color: rgba(67, 97, 238, 0.2);
+}
+
+.project-image {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    object-fit: cover;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.project-content {
+    padding: 1.5rem;
+}
+
+.project-title {
+    font-size: var(--font-size-lg);
+    font-weight: 600;
+    margin-bottom: 0.75rem;
+}
+
+.project-desc {
+    font-size: var(--font-size-sm);
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+}
+
+.project-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.project-tag {
+    font-size: var(--font-size-xs);
+    padding: 0.25rem 0.75rem;
+    border-radius: var(--radius-full);
+    border: 1px solid var(--border-color);
+    color: var(--text-muted);
+    background: var(--hero-link-bg);
+}
+
+.project-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-size-sm);
+    font-weight: 500;
+    transition: all var(--transition-base);
+}
+
+.project-link:hover {
+    opacity: 0.85;
+    transform: translateX(2px);
+}
+
+/* ===================================================
+   FLOATING DOCK
+   =================================================== */
+.dock {
+    position: fixed;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.5rem 0.75rem;
+    background: var(--dock-bg);
+    border: 1px solid var(--dock-border);
+    border-radius: var(--radius-full);
+    box-shadow: var(--dock-shadow);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    z-index: 100;
+    transition: all var(--transition-base);
+}
+
+.dock:hover {
+    box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18);
+}
+
+.dock-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: all var(--transition-base);
+    position: relative;
+}
+
+.dock-item:hover {
+    color: var(--accent);
+    background: var(--hero-link-hover-bg);
+    transform: translateY(-2px);
+}
+
+.dock-item.active {
+    color: var(--accent);
+}
+
+.dock-item svg {
+    transition: transform var(--transition-base);
+}
+
+.dock-item:hover svg {
+    transform: scale(1.15);
+}
+
+/* ===================================================
+   SCROLL REVEAL ANIMATION
+   =================================================== */
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1),
+                transform 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.scroll-reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ===================================================
+   HERO ENTRANCE ANIMATION
+   =================================================== */
+.animate-in {
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeSlideIn 0.8s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+.delay-1 { animation-delay: 0.15s; }
+.delay-2 { animation-delay: 0.3s; }
+.delay-3 { animation-delay: 0.45s; }
+
+@keyframes fadeSlideIn {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ===================================================
+   RESPONSIVE DESIGN
+   =================================================== */
+@media (max-width: 640px) {
+    .hero {
+        flex-direction: column-reverse;
+        align-items: center;
+        text-align: center;
+        gap: 1.5rem;
+    }
+
+    .hero-avatar {
+        width: 110px;
+        height: 110px;
+    }
+
+    .hero-links {
+        width: 100%;
+        flex-direction: column;
+    }
+
+    .hero-link {
+        border-right: none;
+        border-bottom: 1px solid var(--border-color);
+        justify-content: center;
+    }
+
+    .hero-link:last-child {
+        border-bottom: none;
+    }
+
+    .hero-name {
+        font-size: 2.25rem;
+    }
+
+    .work-header {
+        flex-wrap: wrap;
+    }
+
+    .work-date {
+        width: 100%;
+        padding-left: 4rem;
+        margin-top: -0.5rem;
+    }
+
+    .work-details {
+        padding-left: 1rem;
+    }
+
+    .container {
+        padding: 4rem 1rem 7rem;
+    }
+
+    .dock {
+        bottom: 1rem;
+    }
+
+    .skill-item {
+        min-width: 75px;
+        padding: 1rem;
+    }
+
+    .skill-item img,
+    .skill-item svg.rest-api-icon {
+        width: 36px;
+        height: 36px;
+    }
+}
+
+/* ===================================================
+   SELECTION
+   =================================================== */
+::selection {
+    background: var(--accent);
+    color: white;
+}
+
+/* ===================================================
+   SCROLLBAR
+   =================================================== */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--text-muted);
+    border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--accent);
+}
