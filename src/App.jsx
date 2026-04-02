@@ -259,6 +259,36 @@ function App() {
                   </a>
                 </div>
               </motion.div>
+
+              <motion.div 
+                className="project-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <div className="project-image-container">
+                  <img src="/civiledger-thumb.png" alt="CiviLedger Preview" className="project-image"/>
+                </div>
+                <div className="project-content">
+                  <h3 className="project-card-title">CiviLedger (Decentralized Public Policy Execution Engine)</h3>
+                  <ul className="project-list">
+                    <li>Web3 platform converting policies into smart contracts on ICP for transparent execution.</li>
+                    <li>Enabled citizen-triggered fund flows with real-time policy rollout dashboard.</li>
+                    <li>Decentralized platform for transparent public policy execution and citizen engagement.</li>
+                  </ul>
+                  <div className="project-tags">
+                    <span className="project-tag">Web3</span>
+                    <span className="project-tag">ICP</span>
+                    <span className="project-tag">Smart Contracts</span>
+                    <span className="project-tag">React</span>
+                    <span className="project-tag">Tailwind</span>
+                  </div>
+                  <a href="https://civic-ledger-new.vercel.app/" target="_blank" rel="noreferrer" className="project-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg> Website
+                  </a>
+                </div>
+              </motion.div>
             </div>
           </ScrollReveal>
         </section>
@@ -281,8 +311,8 @@ function App() {
       {/* FLOATING DOCK */}
       <motion.nav 
         className="dock"
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
+        initial={{ x: "-50%", y: 100, opacity: 0 }}
+        animate={{ x: "-50%", y: 0, opacity: 1 }}
         transition={{ delay: 0.5, type: 'spring', damping: 20 }}
       >
         <a href="#home" className={`dock-item ${activeSection === 'hero-section' ? 'active' : ''}`} title="Home">
