@@ -107,7 +107,7 @@ function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7, delay: 0.3 }}
             >
-              <a href="/TARUN.pdf" download="Tarun_Agnihotri_Resume.pdf" className="hero-link">
+              <a href="/RESUME.pdf" download="Tarun_Agnihotri_Resume.pdf" className="hero-link">
                 Download Resume
               </a>
               <a href="mailto:tarunagnihotri534@gmail.com" className="hero-link">
