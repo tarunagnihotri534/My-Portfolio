@@ -289,6 +289,36 @@ function App() {
                   </a>
                 </div>
               </motion.div>
+
+              <motion.div
+                className="project-card"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+              >
+                <div className="project-image-container">
+                  <img src="/roadsense-thumb.png" alt="RoadSense Preview" className="project-image" />
+                </div>
+                <div className="project-content">
+                  <h3 className="project-card-title">RoadSense (Intelligent Road Condition Detection)</h3>
+                  <ul className="project-list">
+                    <li>Utilizes smartphone sensors (accelerometer, GPS, and gyroscope) to automatically detect road conditions in real-time.</li>
+                    <li>Passively collects data to identify potholes, traffic congestion, and potential accidents without manual user input.</li>
+                    <li>Provides a data-driven approach to infrastructure maintenance and safer driving experiences for everyone.</li>
+                  </ul>
+                  <div className="project-tags">
+                    <span className="project-tag">React JS</span>
+                    <span className="project-tag">Node JS</span>
+                    <span className="project-tag">Supabase</span>
+                    <span className="project-tag">Tailwind CSS</span>
+                    <span className="project-tag">Framer Motion</span>
+                  </div>
+                  <a href="https://rsai.vercel.app/" target="_blank" rel="noreferrer" className="project-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10" /><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" /><path d="M2 12h20" /></svg> Website
+                  </a>
+                </div>
+              </motion.div>
             </div>
           </ScrollReveal>
         </section>
