@@ -207,11 +207,14 @@ function App() {
             <div className="skills-marquee-wrapper">
               <div className="skills-marquee" data-direction="right">
                 <div className="skills-track skills-track-reverse">
-                  {[...Array(3)].map((_, i) => (
+                  {[...Array(2)].map((_, i) => (
                     <React.Fragment key={i}>
                       <SkillItem src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="Node JS" label="Node JS" />
                       <SkillItem isSvg={true} label="REST API" />
                       <SkillItem src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" label="MongoDB" />
+                      <SkillItem src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/redis/redis-original.svg" alt="Redis" label="Redis" />
+                      <SkillItem src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt="Docker" label="Docker" />
+                      <SkillItem src="https://cdn.worldvectorlogo.com/logos/gsap-greensock.svg" alt="GSAP" label="GSAP" />
                     </React.Fragment>
                   ))}
                 </div>
