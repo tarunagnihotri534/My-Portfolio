@@ -585,6 +585,112 @@ ul {
 }
 
 /* ===================================================
+   BACK BUTTON (Projects Page)
+   =================================================== */
+.back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.6rem 1.1rem;
+    background: var(--hero-link-bg);
+    color: var(--text-secondary);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    transition: all var(--transition-base);
+    border: 1px solid var(--border-color);
+}
+
+.back-btn:hover {
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    transform: translateX(-3px);
+    border-color: transparent;
+}
+
+.back-btn svg {
+    transition: transform var(--transition-base);
+}
+
+.back-btn:hover svg {
+    transform: translateX(-3px);
+}
+
+/* ===================================================
+   VIEW MORE PROJECTS
+   =================================================== */
+.view-more-projects {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 3rem;
+}
+
+.view-more-line {
+    flex: 1;
+    height: 1px;
+    background: var(--border-color);
+}
+
+.view-more-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.85rem;
+    flex-shrink: 0;
+}
+
+.view-more-label {
+    font-size: var(--font-size-sm);
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.02em;
+}
+
+.view-more-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    border-radius: var(--radius-full);
+    font-size: var(--font-size-sm);
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    transition: all var(--transition-base);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    white-space: nowrap;
+}
+
+.view-more-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(67, 97, 238, 0.25);
+    background: var(--accent);
+    color: white;
+    gap: 0.9rem;
+}
+
+.view-more-btn svg:last-child {
+    transition: transform var(--transition-base);
+}
+
+.view-more-btn:hover svg:last-child {
+    transform: translateX(3px);
+}
+
+@media (max-width: 640px) {
+    .view-more-projects {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .view-more-line {
+        width: 100%;
+    }
+}
+
+/* ===================================================
    CONTACT SECTION
    =================================================== */
 .contact-header {
