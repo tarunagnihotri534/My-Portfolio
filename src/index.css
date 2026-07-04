@@ -2,6 +2,13 @@
    CUSTOM FONTS
    =================================================== */
 @font-face {
+    font-family: 'DarlingtonDemo';
+    src: url('/DarlingtonDemo-z8xjG.ttf') format('truetype');
+    font-weight: 400;
+    font-display: block; /* block so preloader doesn't flash fallback */
+}
+
+@font-face {
     font-family: 'Orbitron';
     src: url('/Orbitron-VariableFont_wght.ttf') format('truetype');
     font-weight: 100 900;
@@ -34,6 +41,13 @@
 @font-face {
     font-family: 'Marvel';
     src: url('/MarvelRegular-Dj83.ttf') format('truetype');
+    font-weight: 400;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'HelloWorld';
+    src: url('/Helloworld-ovvY0.ttf') format('truetype');
     font-weight: 400;
     font-display: swap;
 }
@@ -299,6 +313,21 @@ ul {
     letter-spacing: -0.03em;
     text-transform: uppercase;
     margin-bottom: 2.5rem;
+    font-style: italic;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 2vw, 24px);
+}
+
+/* Multitasking icon next to SKILLS heading */
+.skills-multitask-img {
+    width: clamp(30px, 4vw, 52px);
+    height: auto;
+    flex-shrink: 0;
+    transform-origin: center bottom;
+    will-change: transform;
+    display: inline-block;
 }
 
 /* ===================================================
@@ -1060,16 +1089,18 @@ ul {
     position: relative;
     overflow: hidden;
     padding: clamp(120px, 10vw, 160px) clamp(32px, 5vw, 80px);
-    max-width: 100vw;
+    max-width: 100%;
     box-sizing: border-box;
 }
 
-/* BG watermark text behind page components */
+/* BG watermark text — sits inside the text column, centered behind bio */
 .about-hero-bg-text {
     position: absolute;
-    right: -1.5rem;
-    bottom: -0.5rem;
-    font-size: clamp(5rem, 18vw, 14rem);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: clamp(5rem, 18vw, 13rem);
+    font-family: 'Marvel', sans-serif;
     font-weight: 900;
     letter-spacing: -0.04em;
     line-height: 1;
@@ -1102,12 +1133,19 @@ ul {
 
 /* ── Left text column ── */
 .about-hero-text {
+    position: relative; /* positioning context for the ABOUT watermark */
     min-width: 0;
     width: 100%;
     max-width: 100%;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
+}
+
+/* Lift all direct content children above the watermark (z-index: 0) */
+.about-hero-text > *:not(.about-hero-bg-text) {
+    position: relative;
+    z-index: 1;
 }
 
 /* Eyebrow badge pill */
@@ -1181,7 +1219,6 @@ ul {
 /* Bio Paragraph Text - Explicitly ClashDisplay & tight readability settings */
 .about-hero-bio {
     font-family: 'ClashDisplay', 'Clash Display', sans-serif;
-    /* explicitly Clash Display */
     font-size: 17px;
     font-weight: 400;
     color: var(--text-primary);
@@ -1256,7 +1293,7 @@ ul {
 /* Tilted wrapper for the card stack */
 .about-hero-portrait-inner {
     position: relative;
-    transform: rotate(-3deg);
+    transform: rotate(0deg);
     /* tilted portrait stack */
     display: flex;
     justify-content: center;
@@ -1484,9 +1521,12 @@ ul {
     }
 
     .about-hero-bg-text {
-        font-size: clamp(5rem, 30vw, 9rem);
-        right: -0.5rem;
-        bottom: 0;
+        font-size: clamp(4rem, 28vw, 8rem);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        right: auto;
+        bottom: auto;
     }
 
     .about-hero-divider {
@@ -1884,11 +1924,11 @@ ul {
     position: relative;
     padding: 3rem 0 4rem;
     margin-bottom: var(--section-gap);
-    /* same full-bleed trick as about-hero */
-    margin-left: calc(-1 * ((100vw - var(--container-max)) / 2) - 1.5rem);
-    margin-right: calc(-1 * ((100vw - var(--container-max)) / 2) - 1.5rem);
-    padding-left: calc(((100vw - var(--container-max)) / 2) + 1.5rem);
-    padding-right: calc(((100vw - var(--container-max)) / 2) + 1.5rem);
+    /* full-bleed: use 100% (excludes scrollbar) not 100vw to avoid left shift */
+    margin-left: calc(-1 * ((100% - var(--container-max)) / 2) - 1.5rem);
+    margin-right: calc(-1 * ((100% - var(--container-max)) / 2) - 1.5rem);
+    padding-left: calc(((100% - var(--container-max)) / 2) + 1.5rem);
+    padding-right: calc(((100% - var(--container-max)) / 2) + 1.5rem);
     overflow: visible;
 }
 
@@ -1935,6 +1975,24 @@ ul {
     margin-bottom: 1rem;
     /* SplitText chars — perspective needed for rotateX */
     perspective: 600px;
+}
+
+/* Flex row wrapping the title + icon */
+.pv2-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(12px, 2vw, 28px);
+}
+
+/* project-initiation.png — flies via GSAP */
+.pv2-title-icon {
+    width: clamp(32px, 4vw, 56px);
+    height: auto;
+    flex-shrink: 0;
+    transform-origin: center center;
+    will-change: transform;
+    opacity: 0;
 }
 
 .pv2-subtitle {
@@ -3097,5 +3155,694 @@ body {
         width: 110px;
         height: 110px;
         border-radius: 22px;
+    }
+}
+
+
+/* ===================================================
+   SKILL CARDS  (.skill-cards-stack / .skill-card-*)
+   =================================================== */
+
+/* ── Outer stack wrapper ────────────────────────────────────────────────── */
+.skill-cards-stack {
+    width: 100%;
+}
+
+/* ── Per-card section wrapper (sticky host) ─────────────────────────────── */
+/* ── Per-card section wrapper (sticky host) ─────────────────────────────── */
+.skill-card-section {
+    width: 100%;
+    box-sizing: border-box;
+    position: sticky;
+    top: 0;
+    z-index: calc(10 + var(--stack-index, 0));
+    /* Horizontal padding creates the visible page-bg margin on both sides  */
+    padding: 0 clamp(24px, 4vw, 64px);
+    background-color: var(--bg-primary);
+    isolation: isolate;
+}
+
+/* ── The card itself ─────────────────────────────────────────────────────── */
+.skill-card {
+    width: 100%;               /* fills section width after padding          */
+    max-width: 1200px;
+    margin: 0 auto;
+    height: 500px;
+    max-height: 500px;
+    box-sizing: border-box;
+    border-radius: 32px;       /* large radius — visible on all 4 corners    */
+    padding: clamp(48px, 6vw, 80px) clamp(40px, 5vw, 80px);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(32px, 4vw, 80px);
+    overflow: hidden;
+    will-change: transform, opacity;
+}
+
+/* ── Color variants ─────────────────────────────────────────────────────── */
+.skill-card--coral  { background: #fa745f; }
+.skill-card--yellow { background: #f3eb7c; }
+.skill-card--teal   { background: #95f4eb; }
+.skill-card--green  { background: #9bf448; }
+.skill-card--purple { background: #9B8EC4; }   /* Animations       */
+.skill-card--orange { background: #E8A87C; }   /* System Design    */
+
+/* ── Left: text column ──────────────────────────────────────────────────── */
+.skill-card-text {
+    flex: 1 1 55%;
+    min-width: 0;
+}
+
+.skill-card-heading {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0;
+    margin: 0;
+}
+
+.skill-card-line {
+    display: block;
+    font-family: 'HelloWorld', sans-serif;
+    font-size: clamp(3rem, 6.5vw, 7rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    line-height: 0.92;
+    text-transform: uppercase;
+    color: #1a1a1a;
+    white-space: nowrap;
+}
+
+/* ── Right: image column ─────────────────────────────────────────────────── */
+.skill-card-img-wrap {
+    flex: 0 0 30%;
+    max-width: 220px;
+    border-radius: 18px;
+    overflow: hidden;
+    will-change: transform, opacity;
+    align-self: stretch;
+    display: flex;
+    align-items: stretch;
+}
+
+.skill-card-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    display: block;
+    border-radius: 18px;
+    min-height: 300px;
+}
+
+/* ── Tablet (≤900px) — stack vertically inside card ─────────────────────── */
+@media (max-width: 900px) {
+    .skill-card {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: clamp(40px, 6vw, 60px) clamp(28px, 5vw, 48px);
+        min-height: auto;
+    }
+
+    .skill-card-text  { flex: none; width: 100%; }
+
+    .skill-card-line  {
+        font-size: clamp(2.8rem, 9vw, 4.5rem);
+        white-space: normal;
+    }
+
+    .skill-card-img-wrap {
+        flex: none;
+        width: 100%;
+        max-width: 100%;
+        align-self: auto;
+        min-height: 220px;
+    }
+
+    .skill-card-img   { min-height: 220px; }
+}
+
+/* ── Mobile (≤480px) ────────────────────────────────────────────────────── */
+@media (max-width: 480px) {
+    .skill-card {
+        padding: 36px 22px;
+        gap: 24px;
+    }
+
+    .skill-card-line  { font-size: clamp(2.4rem, 12vw, 3.5rem); }
+    .skill-card-img   { min-height: 180px; }
+}
+
+
+/* ===================================================
+   GET IN TOUCH  (.git-*)
+   =================================================== */
+
+/* Outer section — page background, generous vertical space */
+.git-section {
+    width: 100%;
+    background-color: var(--bg-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(80px, 10vw, 140px) clamp(24px, 5vw, 80px);
+    /* initial GSAP state */
+    opacity: 0;
+}
+
+/* ── The pill button ─────────────────────────────────────────────────────── */
+.git-btn {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: clamp(320px, 65vw, 680px);
+    height: clamp(120px, 16vw, 200px);
+    border-radius: 9999px;                /* full pill */
+    border: 4px solid #1a1a1a;
+    background: transparent;
+    cursor: pointer;
+    overflow: hidden;
+    padding: 0;
+    /* initial GSAP state */
+    opacity: 0;
+    /* hover transition */
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1),
+                border-color 0.2s ease;
+    /* GSAP float uses will-change */
+    will-change: transform;
+}
+
+.git-btn:hover {
+    transform: scale(1.04) !important; /* override GSAP float on hover */
+    border-color: #000;
+}
+
+.git-btn:focus-visible {
+    outline: 3px solid var(--accent);
+    outline-offset: 4px;
+}
+
+/* ── Diagonal stripe fill ────────────────────────────────────────────────── */
+/* Matches reference: medium-teal diagonal stripe pattern */
+.git-btn-stripes {
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background-color: #8EC4BF;
+    /* diagonal stripes via repeating-linear-gradient */
+    background-image: repeating-linear-gradient(
+        -45deg,
+        transparent,
+        transparent 16px,
+        rgba(0, 0, 0, 0.08) 16px,
+        rgba(0, 0, 0, 0.08) 32px
+    );
+    pointer-events: none;
+}
+
+/* ── Text content ────────────────────────────────────────────────────────── */
+.git-btn-inner {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.2rem;
+    pointer-events: none;
+}
+
+.git-tagline {
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: clamp(0.75rem, 1.4vw, 1rem);
+    font-weight: 500;
+    letter-spacing: 0.04em;
+    color: #1a1a1a;
+    opacity: 0.75;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.git-label {
+    font-family: 'HelloWorld', 'HubotSans', sans-serif;
+    font-size: clamp(2.2rem, 6vw, 5.5rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: #1a1a1a;
+    text-transform: uppercase;
+    white-space: nowrap;
+    text-align: center;
+}
+
+/* Row that holds the cup + label side-by-side */
+.git-label-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(10px, 1.5vw, 20px);
+}
+
+/* Shaking drink cup image */
+.git-cup {
+    width: clamp(40px, 6vw, 80px);
+    height: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+    /* GSAP drives transform — enable GPU layer */
+    will-change: transform;
+    transform-origin: bottom center;
+}
+
+/* ── Dark mode ───────────────────────────────────────────────────────────── */
+[data-theme="dark"] .git-btn {
+    border-color: #e8e8f0;
+}
+
+[data-theme="dark"] .git-btn-stripes {
+    background-color: #2a4a47;
+}
+
+[data-theme="dark"] .git-tagline,
+[data-theme="dark"] .git-label {
+    color: #e8e8f0;
+}
+
+/* ── Responsive ──────────────────────────────────────────────────────────── */
+@media (max-width: 600px) {
+    .git-section {
+        padding: 64px 20px;
+    }
+
+    .git-btn {
+        width: 90vw;
+        height: clamp(100px, 28vw, 140px);
+        border-width: 3px;
+    }
+
+    .git-tagline {
+        white-space: normal;
+        text-align: center;
+        font-size: 0.7rem;
+    }
+
+    .git-label {
+        font-size: clamp(1.8rem, 9vw, 3rem);
+    }
+}
+
+
+/* ===================================================
+   SITE FOOTER  (.sf-*)
+   =================================================== */
+
+.sf-footer {
+    background: #111111;
+    color: #ffffff;
+    border-radius: 28px 28px 0 0;   /* rounded top corners, flush at bottom */
+    margin: 0 clamp(16px, 3vw, 48px); /* side margin so it floats like reference */
+    padding: clamp(36px, 5vw, 56px) clamp(32px, 5vw, 64px) clamp(24px, 3vw, 36px);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    /* initial state — GSAP animates in */
+    opacity: 0;
+    overflow: hidden;
+}
+
+/* ── Top bar ── */
+.sf-topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: clamp(24px, 4vw, 40px);
+}
+
+.sf-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 9999px;
+    padding: 6px 14px 6px 10px;
+    color: #ffffff;
+}
+
+.sf-badge-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    flex-shrink: 0;
+    display: inline-block;
+    animation: sf-pulse 2s ease-in-out infinite;
+}
+
+@keyframes sf-pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50%       { opacity: 0.5; transform: scale(0.8); }
+}
+
+.sf-back-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    border-radius: 9999px;
+    padding: 6px 10px 6px 14px;
+    color: #ffffff;
+    background: transparent;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background 0.2s ease;
+}
+
+.sf-back-top:hover {
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.06);
+}
+
+.sf-badge-dot--right {
+    background: #ffffff;
+    animation: none;
+}
+
+/* ── Headline + CTA ── */
+.sf-headline-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.2rem;
+    margin-bottom: clamp(8px, 2vw, 16px);
+}
+
+.sf-headline {
+    font-family: 'HelloWorld', 'HubotSans', sans-serif;
+    font-size: clamp(1.6rem, 3.5vw, 3rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: #ffffff;
+    text-transform: uppercase;
+    margin: 0;
+}
+
+.sf-cta-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #111111;
+    background: #ffffff;
+    border-radius: 9999px;
+    padding: 10px 22px;
+    text-decoration: none;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    white-space: nowrap;
+}
+
+.sf-cta-btn:hover {
+    background: #e0e0e0;
+    transform: translateY(-2px);
+}
+
+/* ── Big name ── */
+.sf-name-wrap {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: clamp(8px, 2vw, 20px) 0;
+    overflow: hidden;
+}
+
+.sf-name {
+    font-family: 'HelloWorld', 'Marvel', sans-serif;
+    font-size: clamp(3rem, 9vw, 9rem);
+    font-weight: 700;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    line-height: 1;
+    color: #ffffff;
+    text-transform: uppercase;
+    text-align: center;
+    white-space: nowrap;
+    /* subtle text fade on edges */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 92%, transparent 100%);
+}
+
+/* ── Link columns ── */
+.sf-columns {
+    display: grid;
+    grid-template-columns: 1.2fr 1.2fr 2fr;
+    gap: clamp(48px, 7vw, 100px);
+    padding: clamp(32px, 5vw, 52px) 0;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: clamp(20px, 3vw, 32px);
+}
+
+.sf-col-title {
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    margin-bottom: 1.4rem;
+}
+
+.sf-col-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sf-link {
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    font-weight: 500;
+    color: rgba(255,255,255,0.75);
+    text-decoration: none;
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    transition: color 0.18s ease;
+    letter-spacing: 0.01em;
+}
+
+.sf-link:hover {
+    color: #ffffff;
+}
+
+.sf-link--email {
+    word-break: break-all;
+    font-size: clamp(0.78rem, 1.1vw, 0.92rem);
+}
+
+/* ── Bottom bar ── */
+.sf-bottombar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sf-globe {
+    font-size: 1.2rem;
+    opacity: 0.6;
+}
+
+.sf-copyright {
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.45);
+    text-align: center;
+}
+
+/* ── Tablet ── */
+@media (max-width: 768px) {
+    .sf-footer {
+        margin: 0 12px;
+        border-radius: 20px 20px 0 0;
+    }
+
+    .sf-columns {
+        grid-template-columns: 1fr 1fr;
+        gap: 24px 16px;
+    }
+
+    .sf-col:last-child {
+        grid-column: 1 / -1;
+    }
+
+    .sf-name {
+        font-size: clamp(2.4rem, 12vw, 5rem);
+    }
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+    .sf-footer {
+        margin: 0 8px;
+        border-radius: 16px 16px 0 0;
+        padding: 32px 20px 20px;
+    }
+
+    .sf-topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .sf-columns {
+        grid-template-columns: 1fr;
+    }
+
+    .sf-col:last-child {
+        grid-column: auto;
+    }
+
+    .sf-headline {
+        font-size: clamp(1.4rem, 7vw, 2rem);
+    }
+}
+
+
+/* ===================================================
+   BOOT PRELOADER  (.bp-*)
+   =================================================== */
+
+/* Full-screen overlay — sits above everything */
+.bp-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: #0d0d0d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 0;
+    /* children handle their own spacing */
+    will-change: opacity;
+}
+
+/* ── Terminal phase ── */
+.bp-terminal {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+    font-size: clamp(0.9rem, 2vw, 1.15rem);
+    font-weight: 400;
+    color: #e8e8e8;
+    letter-spacing: 0.04em;
+}
+
+.bp-prompt {
+    color: #4ade80; /* green shell prompt */
+    user-select: none;
+}
+
+.bp-cmd {
+    color: #e8e8e8;
+    white-space: pre;
+}
+
+/* Blinking block cursor */
+.bp-cursor {
+    display: inline-block;
+    width: 0.6em;
+    height: 1.1em;
+    background: #e8e8e8;
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: bp-blink 0.75s step-end infinite;
+}
+
+@keyframes bp-blink {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0; }
+}
+
+/* ── Name phase ── */
+.bp-name-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.6rem;
+}
+
+/* Overflow-hidden wrapper so yPercent clip-reveal works */
+.bp-name-clip {
+    overflow: hidden;
+    padding-bottom: 0.06em; /* prevent descender clip on capital letters */
+}
+
+.bp-name {
+    font-family: 'DarlingtonDemo', serif;
+    font-size: clamp(3rem, 8vw, 7rem);
+    font-weight: 400;
+    color: #ffffff;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1;
+    margin: 0;
+    white-space: nowrap;
+    /* initial state set by GSAP (yPercent: 110, opacity: 0) */
+}
+
+/* Percentage counter */
+.bp-counter {
+    font-family: 'Courier New', 'Menlo', 'Monaco', monospace;
+    font-size: clamp(0.85rem, 1.8vw, 1rem);
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.12em;
+    margin: 0;
+    /* initial state set by GSAP (opacity: 0) */
+}
+
+/* ── Reduced-motion safety net ── */
+@media (prefers-reduced-motion: reduce) {
+    .bp-overlay {
+        display: none !important;
+    }
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+    .bp-name {
+        font-size: clamp(2rem, 11vw, 3.5rem);
+        white-space: normal;
+        text-align: center;
+        padding: 0 1rem;
     }
 }

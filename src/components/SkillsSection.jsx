@@ -56,10 +56,11 @@ const ROW_2 = [
 ];
 
 export function SkillsSection() {
-  const sectionRef  = useRef(null);
-  const titleRef    = useRef(null);
-  const row1Ref     = useRef(null);
-  const row2Ref     = useRef(null);
+  const sectionRef    = useRef(null);
+  const titleRef      = useRef(null);
+  const row1Ref       = useRef(null);
+  const row2Ref       = useRef(null);
+  const multitaskRef  = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -97,6 +98,30 @@ export function SkillsSection() {
           },
         }
       );
+
+      // ── Multitasking icon — circus juggle: toss up, spin slightly, land ─
+      const juggleTl = gsap.timeline({ repeat: -1, repeatDelay: 1.6 });
+      juggleTl
+        // toss up with slight spin left
+        .to(multitaskRef.current, {
+          y: -30, rotation: -18, scale: 1.12,
+          duration: 0.3, ease: 'power2.out',
+        })
+        // peak — hang a moment
+        .to(multitaskRef.current, {
+          y: -38, rotation: -22, scale: 1.15,
+          duration: 0.18, ease: 'power1.out',
+        })
+        // spin right on the way down
+        .to(multitaskRef.current, {
+          y: -18, rotation: 10, scale: 1.08,
+          duration: 0.18, ease: 'power1.in',
+        })
+        // land with bounce
+        .to(multitaskRef.current, {
+          y: 0, rotation: 0, scale: 1,
+          duration: 0.45, ease: 'bounce.out',
+        });
     }, sectionRef);
 
     return () => ctx.revert();
@@ -110,7 +135,16 @@ export function SkillsSection() {
       aria-label="Skills"
     >
       {/* Section title */}
-      <h2 ref={titleRef} className="section-title skills-section-title">SKILLS</h2>
+      <h2 ref={titleRef} className="section-title skills-section-title">
+        SKILLS
+        <img
+          ref={multitaskRef}
+          src="/multitasking.png"
+          alt=""
+          aria-hidden="true"
+          className="skills-multitask-img"
+        />
+      </h2>
 
       {/* ── Row 1 — scrolls left ── */}
       <div ref={row1Ref} className="skills-marquee-wrapper">

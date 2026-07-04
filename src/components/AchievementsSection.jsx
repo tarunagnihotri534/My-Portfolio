@@ -40,6 +40,7 @@ const achievements = [
 export function AchievementsSection() {
   const sectionRef = useRef(null);
   const headerRef  = useRef(null);
+  const trophyRef  = useRef(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -59,6 +60,19 @@ export function AchievementsSection() {
           scrollTrigger: { trigger: sectionRef.current, start: 'top 72%', once: true },
         }
       );
+
+      // ── Trophy animation — bounce + shake loop ────────────────────────
+      const trophyTl = gsap.timeline({ repeat: -1, repeatDelay: 1.8 });
+      trophyTl
+        // bounce up
+        .to(trophyRef.current, { y: -18, duration: 0.28, ease: 'power2.out' })
+        // shake mid-air
+        .to(trophyRef.current, { rotation:  14, duration: 0.07, ease: 'power1.inOut' })
+        .to(trophyRef.current, { rotation: -12, duration: 0.07, ease: 'power1.inOut' })
+        .to(trophyRef.current, { rotation:   8, duration: 0.07, ease: 'power1.inOut' })
+        .to(trophyRef.current, { rotation:   0, duration: 0.06, ease: 'power1.inOut' })
+        // land back down with elastic
+        .to(trophyRef.current, { y: 0, duration: 0.35, ease: 'bounce.out' });
     }, sectionRef);
     return () => ctx.revert();
   }, []);
@@ -81,8 +95,23 @@ export function AchievementsSection() {
         <h2 style={{
           fontSize: 'clamp(2.5rem, 5vw, 5rem)', fontWeight: '900', letterSpacing: '-0.02em',
           marginBottom: '1rem', fontFamily: 'ClashDisplay, sans-serif', textTransform: 'uppercase',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem',
         }}>
           ACHIEVEMENTS
+          <img
+            ref={trophyRef}
+            src="/trophy.png"
+            alt="Trophy"
+            style={{
+              width: 'clamp(40px, 6vw, 72px)',
+              height: 'auto',
+              display: 'inline-block',
+              verticalAlign: 'middle',
+              transformOrigin: 'bottom center',
+              willChange: 'transform',
+              flexShrink: 0,
+            }}
+          />
         </h2>
         <p style={{ fontSize: '1.125rem', color: '#555770', maxWidth: '600px', margin: '0 auto' }}>
           Hackathons, awards, recognitions, and milestones that shaped the work.

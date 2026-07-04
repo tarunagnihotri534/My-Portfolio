@@ -54,7 +54,7 @@ export function AboutHero() {
       tl.fromTo(
         portraitRef.current,
         { x: 60, opacity: 0, rotate: 0 },
-        { x: 0, opacity: 1, rotate: -3, duration: 0.85, ease: 'back.out(1.2)' },
+        { x: 0, opacity: 1, rotate: 0, duration: 0.85, ease: 'back.out(1.2)' },
         0.25
       );
 
@@ -116,15 +116,15 @@ export function AboutHero() {
       id="about-section"
       aria-label="About"
     >
-      {/* Background watermark */}
-      <span ref={bgTextRef} className="about-hero-bg-text" aria-hidden="true">
-        ABOUT
-      </span>
-
       <div className="about-hero-inner">
 
         {/* ── Left: text column ── */}
         <div className="about-hero-text">
+
+          {/* Background watermark — lives inside text column so it centers behind bio */}
+          <span ref={bgTextRef} className="about-hero-bg-text" aria-hidden="true">
+            ABOUT
+          </span>
 
           {/* Eyebrow badge */}
           <span ref={eyebrowRef} className="about-hero-eyebrow">

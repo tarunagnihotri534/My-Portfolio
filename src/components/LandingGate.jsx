@@ -1,33 +1,39 @@
 import { useState, useEffect } from 'react';
-import { CinematicIntro } from './cinematic/CinematicIntro';
+import { BootPreloader } from './BootPreloader';
 
 /**
  * LandingGate
  *
- * Sits above the whole page. Renders CinematicIntro until it calls
- * onComplete, then unmounts itself so there is zero DOM overhead after
- * the intro finishes.
- *
- * Reduced-motion users: skips the intro immediately on mount so the
- * portfolio is never blocked.
+ * - Shows BootPreloader only once per browser session (sessionStorage flag).
+ * - Skips on internal route changes (SPA navigation without hard reload).
+ * - Skips on prefers-reduced-motion (handled inside BootPreloader too).
+ * - After completion, sets introDone so HeroSection can run its entrance.
  */
 export function LandingGate({ onComplete }) {
-  const [done, setDone] = useState(false);
+  const [show, setShow] = useState(() => {
+    // Check flag synchronously to avoid flash of preloader on return visits
+    try {
+      return !sessionStorage.getItem('bp_seen');
+    } catch {
+      return false; // private browsing may block sessionStorage
+    }
+  });
 
-  // Honour prefers-reduced-motion — skip intro entirely
+  // Also skip immediately for reduced-motion users
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setDone(true);
+      setShow(false);
       onComplete?.();
     }
   }, [onComplete]);
 
   const handleComplete = () => {
-    setDone(true);
+    try { sessionStorage.setItem('bp_seen', '1'); } catch { /* ignore */ }
+    setShow(false);
     onComplete?.();
   };
 
-  if (done) return null;
+  if (!show) return null;
 
-  return <CinematicIntro onComplete={handleComplete} />;
+  return <BootPreloader onComplete={handleComplete} />;
 }

@@ -282,14 +282,15 @@ function CursorThumb() {
 
 /* ─── Main component ─── */
 export function ProjectsSection() {
-  const sectionRef   = useRef(null);
-  const pillRef      = useRef(null);
-  const titleRef     = useRef(null);
-  const subtitleRef  = useRef(null);
-  const featImgRef   = useRef(null);
-  const featInfoRef  = useRef(null);
-  const cardRefs     = useRef([]);
-  const ctaRef       = useRef(null);
+  const sectionRef      = useRef(null);
+  const pillRef         = useRef(null);
+  const titleRef        = useRef(null);
+  const subtitleRef     = useRef(null);
+  const featImgRef      = useRef(null);
+  const featInfoRef     = useRef(null);
+  const cardRefs        = useRef([]);
+  const ctaRef          = useRef(null);
+  const projIconRef     = useRef(null);   // project-initiation.png
 
   const featured   = PROJECTS[0];
   const gridProjects = PROJECTS.slice(1);
@@ -362,6 +363,33 @@ export function ProjectsSection() {
         1.1
       );
 
+      /* ── project-initiation icon — spin + bounce loop ── */
+      // Entrance: pop in with the title
+      tl.fromTo(projIconRef.current,
+        { scale: 0, opacity: 0, rotation: -45 },
+        { scale: 1, opacity: 1, rotation: 0, duration: 0.6, ease: 'back.out(2)' },
+        0.4
+      );
+      // ── project-initiation (rocket) — fly up with slight tilt, drift back ─
+      const rocketTl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
+      rocketTl
+        .to(projIconRef.current, {
+          y: -28, x: 8, rotation: 15,
+          duration: 0.4, ease: 'power2.out',
+        })
+        .to(projIconRef.current, {
+          y: -38, x: 14, rotation: 20,
+          duration: 0.25, ease: 'power1.out',
+        })
+        .to(projIconRef.current, {
+          y: -20, x: 8, rotation: 10,
+          duration: 0.18, ease: 'power1.in',
+        })
+        .to(projIconRef.current, {
+          y: 0, x: 0, rotation: 0,
+          duration: 0.5, ease: 'bounce.out',
+        });
+
       /* Parallax on featured image */
       gsap.to(featImgRef.current, {
         y: -50,
@@ -394,7 +422,16 @@ export function ProjectsSection() {
           <span className="pv2-pill-dot" />
           Selected Work
         </span>
-        <h2 ref={titleRef} className="pv2-title">PROJECTS</h2>
+        <div className="pv2-title-row">
+          <h2 ref={titleRef} className="pv2-title">PROJECTS</h2>
+          <img
+            ref={projIconRef}
+            src="/project-initiation.png"
+            alt=""
+            aria-hidden="true"
+            className="pv2-title-icon"
+          />
+        </div>
         <p ref={subtitleRef} className="pv2-subtitle">
           A curated set of builds spanning AI platforms, Web3 infrastructure,
           and intelligent mobile experiences.

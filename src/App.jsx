@@ -11,6 +11,9 @@ import { SkillsSection } from './components/SkillsSection';
 import { ProjectsSection } from './components/ProjectsSection';
 import { AchievementsSection } from './components/AchievementsSection';
 import { CTASection } from './components/CTASection';
+import { SkillCards } from './components/SkillCards';
+import { GetInTouch } from './components/GetInTouch';
+import { SiteFooter } from './components/SiteFooter';
 
 // Register once at module level — not inside components
 gsap.registerPlugin(ScrollTrigger);
@@ -104,7 +107,10 @@ function App() {
         <ProjectsSection />
         <AchievementsSection />
         <CTASection />
+        <SkillCards />
+        <GetInTouch />
       </main>
+      <SiteFooter />
     </>
   );
 }
