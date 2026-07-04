@@ -1,0 +1,260 @@
+/* ===================================================
+   CINEMATIC INTRO — standalone stylesheet
+   All classes used exclusively by CinematicIntro.jsx
+   =================================================== */
+
+/* ── Wrapper overlay ── */
+.cinematic-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Background video ── */
+.cinematic-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+  /* opacity driven by GSAP */
+}
+
+/* ── Dark overlay on top of video ── */
+.cinematic-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ── Vignette ring ── */
+.cinematic-vignette {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  box-shadow:
+    inset 0 0 120px 60px rgba(0, 0, 0, 0.7),
+    inset 0 0 280px 120px rgba(0, 0, 0, 0.4);
+}
+
+/* ── Horizontal scan lines ── */
+.cinematic-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+  /* opacity animated by GSAP */
+}
+
+.cinematic-line {
+  position: absolute;
+  left: 5%;
+  right: 5%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.08);
+  transform-origin: left center;
+  /* scaleX animated by GSAP */
+}
+
+/* ── Corner labels ── */
+.cinematic-corners {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+  display: contents;
+  /* opacity animated by GSAP on children */
+}
+
+.cinematic-corner {
+  position: absolute;
+  font-family: 'Orbitron', 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  /* opacity animated by GSAP */
+}
+
+.cinematic-corner--tl {
+  top: 2rem;
+  left: 2.5rem;
+}
+
+.cinematic-corner--tr {
+  top: 2rem;
+  right: 2.5rem;
+}
+
+/* ── Center terminal block ── */
+.cinematic-center {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.cinematic-terminal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.6rem;
+}
+
+/* ── Prompt line "❯ terminal" ── */
+.cinematic-prompt {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+  /* opacity + y animated by GSAP */
+}
+
+/* ── Giant "npm run dev" text ── */
+.cinematic-npm-text {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55em;
+  /* opacity animated by GSAP */
+}
+
+.cinematic-npm-word {
+  font-family: 'Orbitron', 'JetBrains Mono', monospace;
+  font-size: clamp(2.5rem, 8vw, 6.5rem);
+  font-weight: 900;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  text-transform: lowercase;
+  color: #ffffff;
+  display: inline-flex;
+  align-items: baseline;
+  position: relative;
+}
+
+/* Word-level color accents */
+.cinematic-npm-word--npm {
+  color: #cc3534; /* npm red */
+}
+
+.cinematic-npm-word--run {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.cinematic-npm-word--dev {
+  color: #4ade80; /* green "dev" */
+}
+
+/* ── Individual typed letters ── */
+.cinematic-letter {
+  display: inline-block;
+  /* opacity + y animated by GSAP stagger */
+}
+
+/* ── Blinking cursor ── */
+.cinematic-cursor {
+  display: inline-block;
+  width: 0.5em;
+  height: 1em;
+  background: #4ade80;
+  margin-left: 0.1em;
+  vertical-align: baseline;
+  border-radius: 2px;
+  animation: cinematic-blink 0.8s step-end infinite;
+  /* opacity animated by GSAP */
+}
+
+@keyframes cinematic-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Progress bar (bottom) ── */
+.cinematic-progress-wrap {
+  position: absolute;
+  bottom: 3rem;
+  left: 5%;
+  right: 5%;
+  z-index: 5;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.cinematic-progress-bar {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.5);
+  width: 0%; /* animated by GSAP */
+  transform-origin: left;
+}
+
+/* ── Skip button ── */
+.cinematic-skip {
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  z-index: 6;
+  font-family: 'Orbitron', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 0.45rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+  /* opacity animated by GSAP */
+}
+
+.cinematic-skip:hover {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.07);
+}
+
+/* ── Reduced-motion safety ── */
+@media (prefers-reduced-motion: reduce) {
+  .cinematic-intro {
+    display: none !important;
+  }
+}
+
+/* ── Mobile adjustments ── */
+@media (max-width: 640px) {
+  .cinematic-corner--tl {
+    top: 1.25rem;
+    left: 1.25rem;
+  }
+
+  .cinematic-corner--tr {
+    top: 1.25rem;
+    right: 1.25rem;
+  }
+
+  .cinematic-skip {
+    bottom: 1.5rem;
+    right: 1.25rem;
+  }
+
+  .cinematic-npm-word {
+    font-size: clamp(1.8rem, 12vw, 3.5rem);
+  }
+}
