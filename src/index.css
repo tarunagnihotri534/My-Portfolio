@@ -3782,7 +3782,6 @@ body {
 
 .cp-page {
     min-height: 100vh;
-    /* Warm peach-to-lavender gradient — more attractive than flat bg-primary */
     background: linear-gradient(
         145deg,
         #fdf0ea 0%,
@@ -3790,9 +3789,9 @@ body {
         #eaf3fb 65%,
         #e8f5f3 100%
     );
-    padding: clamp(80px, 8vw, 120px) clamp(24px, 5vw, 80px) clamp(60px, 6vw, 100px);
+    padding: clamp(40px, 4vw, 60px) clamp(24px, 5vw, 80px) clamp(60px, 6vw, 100px);
     position: relative;
-    overflow: hidden; /* clip bubbles to page */
+    overflow: hidden;
 }
 
 /* Bubble canvas — fills the page, behind all content */
@@ -3932,20 +3931,51 @@ body {
 .cp-right { opacity: 0; } /* GSAP animates in */
 
 .cp-card {
-    background: var(--bg-secondary);
-    border: 1.5px solid var(--border-color);
+    background: linear-gradient(135deg, #fff9f5 0%, #f0f4ff 50%, #f5fff8 100%);
+    border: 1.5px solid rgba(140,196,191,0.35);
     border-radius: 24px;
     padding: clamp(32px, 4vw, 52px);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.06);
-    /* diagonal stripe background matching reference */
-    background-image:
-        repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 28px,
-            rgba(0,0,0,0.018) 28px,
-            rgba(0,0,0,0.018) 29px
-        );
+    box-shadow: 0 8px 40px rgba(140,196,191,0.18), 0 2px 8px rgba(0,0,0,0.05);
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+}
+
+/* Animated diagonal lines overlay — sits behind form content */
+.cp-card::before {
+    content: '';
+    position: absolute;
+    inset: -100%;           /* oversized so lines always fill during animation */
+    background-image: repeating-linear-gradient(
+        -45deg,
+        transparent            0px,
+        transparent            22px,
+        rgba(140,196,191,0.18) 22px,
+        rgba(140,196,191,0.18) 23px,
+        transparent            23px,
+        transparent            45px,
+        rgba(248,112,96,0.10)  45px,
+        rgba(248,112,96,0.10)  46px,
+        transparent            46px,
+        transparent            68px,
+        rgba(180,160,240,0.12) 68px,
+        rgba(180,160,240,0.12) 69px
+    );
+    background-size: 96px 96px;
+    animation: cp-lines-move 8s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes cp-lines-move {
+    from { transform: translate(0, 0); }
+    to   { transform: translate(96px, 96px); }
+}
+
+/* Ensure all form content sits above the animated lines */
+.cp-card > * {
+    position: relative;
+    z-index: 1;
 }
 
 .cp-card-title {
@@ -4144,14 +4174,26 @@ body {
 
 /* ── Dark mode ── */
 [data-theme="dark"] .cp-card {
-    background-image:
-        repeating-linear-gradient(
-            -45deg,
-            transparent,
-            transparent 28px,
-            rgba(255,255,255,0.025) 28px,
-            rgba(255,255,255,0.025) 29px
-        );
+    background: linear-gradient(135deg, #1a1a2e 0%, #1e1e3a 50%, #1a2a28 100%);
+    border-color: rgba(140,196,191,0.2);
+}
+
+[data-theme="dark"] .cp-card::before {
+    background-image: repeating-linear-gradient(
+        -45deg,
+        transparent            0px,
+        transparent            22px,
+        rgba(140,196,191,0.10) 22px,
+        rgba(140,196,191,0.10) 23px,
+        transparent            23px,
+        transparent            45px,
+        rgba(248,112,96,0.07)  45px,
+        rgba(248,112,96,0.07)  46px,
+        transparent            46px,
+        transparent            68px,
+        rgba(180,160,240,0.09) 68px,
+        rgba(180,160,240,0.09) 69px
+    );
 }
 
 
