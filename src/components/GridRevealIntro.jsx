@@ -17,11 +17,11 @@ export function GridRevealIntro({ onComplete }) {
   const tilesRefs  = useRef([]);
 
   useEffect(() => {
-    // Scroll to top instantly before the animation starts
     window.scrollTo({ top: 0, behavior: 'instant' });
-
-    // Lock body scroll during animation
     document.body.style.overflow = 'hidden';
+
+    // Name is fully visible from frame 0 — tiles cover it initially
+    gsap.set(nameRef.current, { opacity: 1, scale: 1 });
 
     const tl = gsap.timeline({
       onComplete: () => {
@@ -30,46 +30,42 @@ export function GridRevealIntro({ onComplete }) {
       },
     });
 
-    // ── Name text reveal behind tiles ────────────────────────────────────
-    tl.fromTo(
-      nameRef.current,
-      { opacity: 0, scale: 1.3 },
-      { opacity: 0.12, scale: 1, duration: 0.6, ease: 'power2.out' },
-      0
-    );
-
-    // ── Tiles scale + slide outward from center ──────────────────────────
-    // Each tile gets a unique direction vector based on its grid position
+    // ── Tiles scatter outward — all move at once, tight stagger ──────────
     tilesRefs.current.forEach((tile, i) => {
       if (!tile) return;
 
-      // 3 cols × 3 rows = 9 tiles (adjust if you want 4×3)
-      const col = i % 3;
-      const row = Math.floor(i / 3);
-
-      // Calculate direction vector from center (1,1) in 3×3 grid
-      const xDir = col - 1; // -1, 0, +1
-      const yDir = row - 1; // -1, 0, +1
+      const col  = i % 3;
+      const row  = Math.floor(i / 3);
+      const xDir = col - 1;
+      const yDir = row - 1;
 
       tl.to(
         tile,
         {
-          x: xDir * 120 + '%',   // push tiles outward
-          y: yDir * 120 + '%',
-          scale: 0.6,
-          opacity: 0,
-          duration: 0.85,
-          ease: 'power3.inOut',
+          x:        xDir * 130 + '%',
+          y:        yDir * 130 + '%',
+          scale:    0.5,
+          opacity:  0,
+          duration: 0.7,
+          ease:     'power3.inOut',
         },
-        0.3 + i * 0.03   // slight stagger for visual flow
+        i * 0.025   // tight stagger — all tiles move nearly simultaneously
       );
     });
 
-    // ── Fade out entire overlay ──────────────────────────────────────────
+    // ── Name scales slightly as it's revealed then fades quickly ─────────
+    tl.fromTo(
+      nameRef.current,
+      { scale: 1.08, opacity: 1 },
+      { scale: 1, opacity: 0, duration: 0.35, ease: 'power2.in' },
+      0
+    );
+
+    // ── Overlay fades out after tiles gone ────────────────────────────────
     tl.to(
       overlayRef.current,
-      { opacity: 0, duration: 0.35, ease: 'power2.in' },
-      '-=0.2'
+      { opacity: 0, duration: 0.4, ease: 'power2.in' },
+      '-=0.15'
     );
 
     return () => {

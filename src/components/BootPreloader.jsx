@@ -110,15 +110,11 @@ export function BootPreloader({ onComplete }) {
           '<'
         );
 
-        // Hold at 100 briefly, then wipe out
-        sub.to({}, { duration: 0.2 });
-        sub.to(overlayRef.current, {
-          opacity: 0,
-          duration: 0.35,
-          ease: 'power2.in',
-          onComplete() {
-            onComplete?.();
-          },
+        // Hold at 100 briefly, then immediately hand off to GridReveal
+        // (NO fade-out here — GridRevealIntro covers the screen next)
+        sub.to({}, { duration: 0.25 });
+        sub.call(() => {
+          onComplete?.();
         });
       },
       [],
