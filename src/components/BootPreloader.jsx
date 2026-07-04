@@ -41,6 +41,9 @@ export function BootPreloader({ onComplete }) {
       return;
     }
 
+    // Always start at the very top of the page
+    window.scrollTo({ top: 0, behavior: 'instant' });
+
     const prevOverflow        = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
 

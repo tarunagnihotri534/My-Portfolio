@@ -3736,6 +3736,476 @@ body {
 
 
 /* ===================================================
+   CURSOR TRAIL  (.ct-*)
+   =================================================== */
+
+/* Invisible container — fixed, full-screen, no pointer events */
+.ct-container {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 9990;
+    overflow: hidden;
+}
+
+/* Each square tile */
+.ct-tile {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+    border-radius: 10px;
+    overflow: hidden;
+    border: 2px solid rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    pointer-events: none;
+    /* GSAP sets x/y/scale/opacity */
+    will-change: transform, opacity;
+    /* slight rotate on each tile via nth-child for a scattered feel */
+}
+
+.ct-tile:nth-child(odd)  { transform-origin: center center; rotate: 4deg; }
+.ct-tile:nth-child(even) { transform-origin: center center; rotate: -4deg; }
+
+.ct-tile img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+
+/* ===================================================
+   CONTACT PAGE  (.cp-*)
+   =================================================== */
+
+.cp-page {
+    min-height: 100vh;
+    /* Warm peach-to-lavender gradient — more attractive than flat bg-primary */
+    background: linear-gradient(
+        145deg,
+        #fdf0ea 0%,
+        #f5eef8 30%,
+        #eaf3fb 65%,
+        #e8f5f3 100%
+    );
+    padding: clamp(80px, 8vw, 120px) clamp(24px, 5vw, 80px) clamp(60px, 6vw, 100px);
+    position: relative;
+    overflow: hidden; /* clip bubbles to page */
+}
+
+/* Bubble canvas — fills the page, behind all content */
+.cp-bubbles {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    display: block;
+}
+
+/* Ensure all direct children of cp-page sit above the canvas */
+.cp-page > *:not(.cp-bubbles) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Back link */
+.cp-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    text-decoration: none;
+    margin-bottom: clamp(32px, 4vw, 56px);
+    display: block;
+    transition: color 0.2s ease;
+}
+.cp-back:hover { color: var(--text-primary); }
+
+/* Two-column inner layout */
+.cp-inner {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: clamp(48px, 6vw, 100px);
+    max-width: 1200px;
+    margin: 0 auto;
+    align-items: start;
+}
+
+/* ── LEFT ── */
+.cp-left { opacity: 0; } /* GSAP animates in */
+
+.cp-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    border: 1.5px solid var(--border-color);
+    border-radius: 9999px;
+    padding: 6px 14px 6px 10px;
+    color: var(--text-primary);
+    margin-bottom: 1.6rem;
+}
+
+.cp-eyebrow-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #4ade80;
+    flex-shrink: 0;
+    animation: sf-pulse 2s ease-in-out infinite;
+}
+
+.cp-headline {
+    font-family: 'HelloWorld', 'HubotSans', sans-serif;
+    font-size: clamp(3rem, 7vw, 6.5rem);
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    margin-bottom: 1.6rem;
+}
+
+.cp-subtext {
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+    color: var(--text-secondary);
+    line-height: 1.75;
+    max-width: 440px;
+    margin-bottom: 2.4rem;
+}
+
+/* Contact link groups */
+.cp-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1.4rem;
+}
+
+.cp-link-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.cp-link-label {
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    color: var(--text-primary);
+    background: var(--text-primary);
+    color: var(--bg-primary);
+    padding: 2px 8px;
+    border-radius: 4px;
+    display: inline-block;
+    width: fit-content;
+    margin-bottom: 0.1rem;
+}
+
+.cp-link-val {
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    font-weight: 500;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.18s ease;
+    letter-spacing: 0.02em;
+}
+.cp-link-val:hover { color: var(--text-primary); }
+
+/* ── RIGHT — form card ── */
+.cp-right { opacity: 0; } /* GSAP animates in */
+
+.cp-card {
+    background: var(--bg-secondary);
+    border: 1.5px solid var(--border-color);
+    border-radius: 24px;
+    padding: clamp(32px, 4vw, 52px);
+    box-shadow: 0 8px 40px rgba(0,0,0,0.06);
+    /* diagonal stripe background matching reference */
+    background-image:
+        repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 28px,
+            rgba(0,0,0,0.018) 28px,
+            rgba(0,0,0,0.018) 29px
+        );
+}
+
+.cp-card-title {
+    font-family: 'HelloWorld', 'HubotSans', sans-serif;
+    font-size: clamp(1.4rem, 2.5vw, 2rem);
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+}
+
+.cp-card-sub {
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.88rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    line-height: 1.6;
+}
+
+/* Form layout */
+.cp-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+.cp-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+}
+
+.cp-field {
+    display: flex;
+    flex-direction: column-reverse; /* label sits below input — floats on focus */
+    gap: 0.3rem;
+}
+
+.cp-field--full { grid-column: 1 / -1; }
+
+.cp-label {
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.6rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    transition: color 0.18s ease;
+}
+
+.cp-input {
+    width: 100%;
+    background: var(--bg-primary);
+    border: 1.5px solid var(--border-color);
+    border-radius: 10px;
+    padding: 12px 14px;
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.9rem;
+    color: var(--text-primary);
+    outline: none;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    box-sizing: border-box;
+    appearance: none;
+    -webkit-appearance: none;
+}
+
+.cp-input::placeholder { color: var(--text-muted); }
+
+.cp-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(67,97,238,0.1);
+}
+
+.cp-input:focus + .cp-label { color: var(--accent); }
+
+/* Error state */
+.cp-input--error {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.12);
+}
+
+.cp-field-error {
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #ef4444;
+    margin-top: 0.15rem;
+    order: -1; /* sits above the label in column-reverse layout */
+}
+
+.cp-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238b8da3' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+}
+
+.cp-textarea {
+    resize: vertical;
+    min-height: 120px;
+    line-height: 1.6;
+}
+
+.cp-submit {
+    width: 100%;
+    /* Coral gradient matching reference */
+    background: linear-gradient(90deg, #f87060 0%, #f4a26a 50%, #8EC4BF 100%);
+    background-size: 200% 100%;
+    color: #ffffff;
+    border: none;
+    border-radius: 12px;
+    padding: 16px 24px;
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background-position 0.4s ease, transform 0.2s ease, opacity 0.2s ease;
+    margin-top: 0.4rem;
+    background-position: 0% 50%;
+}
+.cp-submit:hover:not(:disabled) {
+    background-position: 100% 50%;
+    transform: translateY(-2px);
+}
+.cp-submit:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* Waving hand emoji next to heading */
+.cp-card-title {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+    flex-wrap: wrap;
+}
+
+.cp-wave-emoji {
+    display: inline-block;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
+    will-change: transform;
+    transform-origin: 70% 70%;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+/* Success banner */
+.cp-success {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    background: #8EC4BF;
+    border-radius: 12px;
+    padding: 16px 20px;
+    font-family: 'ClashDisplay', 'Clash Display', sans-serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #0d2e2c;
+    line-height: 1.5;
+    margin-top: 0.2rem;
+    /* GSAP controls opacity/transform */
+}
+
+.cp-success-icon {
+    font-size: 1.1rem;
+    font-weight: 900;
+    flex-shrink: 0;
+    background: #0d2e2c;
+    color: #8EC4BF;
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ── Tablet ── */
+@media (max-width: 860px) {
+    .cp-inner {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    .cp-headline { font-size: clamp(2.5rem, 10vw, 4rem); }
+}
+
+/* ── Mobile ── */
+@media (max-width: 480px) {
+    .cp-page { padding: 72px 20px 48px; }
+    .cp-row  { grid-template-columns: 1fr; }
+    .cp-card { padding: 28px 20px; border-radius: 18px; }
+}
+
+/* ── Dark mode ── */
+[data-theme="dark"] .cp-card {
+    background-image:
+        repeating-linear-gradient(
+            -45deg,
+            transparent,
+            transparent 28px,
+            rgba(255,255,255,0.025) 28px,
+            rgba(255,255,255,0.025) 29px
+        );
+}
+
+
+/* ===================================================
+   GRID REVEAL INTRO  (.grid-reveal-*)
+   =================================================== */
+
+/* Full-screen fixed overlay — sits above everything */
+.grid-reveal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9998;   /* one below boot preloader (9999) */
+    overflow: hidden;
+    pointer-events: all;
+}
+
+/* Giant name text behind the tiles */
+.grid-reveal-name {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'HelloWorld', 'Marvel', sans-serif;
+    font-size: clamp(5rem, 14vw, 14rem);
+    font-weight: 900;
+    font-style: italic;
+    letter-spacing: -0.03em;
+    color: #ffffff;
+    text-align: center;
+    user-select: none;
+    z-index: 0;
+    opacity: 0;   /* GSAP animates this */
+    white-space: nowrap;
+}
+
+/* 3×3 tile grid — covers exactly the viewport */
+.grid-reveal-tiles {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    z-index: 1;
+}
+
+/* Individual tile */
+.grid-reveal-tile {
+    background: #0d0d0d;
+    will-change: transform, opacity;
+    transform-origin: center center;
+}
+
+/* ===================================================
    BOOT PRELOADER  (.bp-*)
    =================================================== */
 

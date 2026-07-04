@@ -11,8 +11,8 @@
  */
 
 import { useRef, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 export function GetInTouch() {
   const sectionRef = useRef(null);
@@ -81,14 +81,7 @@ export function GetInTouch() {
   }, []);
 
   function handleClick() {
-    const contact = document.getElementById('contact');
-    if (contact) {
-      window.dispatchEvent(
-        new CustomEvent('lenis-scroll-to', { detail: { el: contact } })
-      );
-    } else {
-      window.location.href = 'mailto:tarunagnihotri534@gmail.com';
-    }
+    // Now handled by React Router Link — kept for reference
   }
 
   return (
@@ -97,11 +90,11 @@ export function GetInTouch() {
       className="git-section"
       aria-label="Get in touch"
     >
-      <button
+      <Link
         ref={btnRef}
+        to="/contact"
         className="git-btn"
-        onClick={handleClick}
-        aria-label="Get in touch — send an email"
+        aria-label="Get in touch — open contact page"
       >
         {/* Diagonal stripe overlay */}
         <span className="git-btn-stripes" aria-hidden="true" />
@@ -121,7 +114,7 @@ export function GetInTouch() {
             <span className="git-label">GET IN TOUCH</span>
           </span>
         </span>
-      </button>
+      </Link>
     </section>
   );
 }

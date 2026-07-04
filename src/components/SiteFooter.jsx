@@ -119,7 +119,7 @@ export function SiteFooter() {
               </a>
             </li>
             <li>
-              <a href="https://linkedin.com/in/tarun-agnihotri" target="_blank" rel="noreferrer" className="sf-link">
+              <a href="https://www.linkedin.com/in/tarun-agnihotri69/" target="_blank" rel="noreferrer" className="sf-link">
                 LinkedIn
               </a>
             </li>
