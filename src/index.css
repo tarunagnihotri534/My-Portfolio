@@ -2590,11 +2590,12 @@ body {
 
 /* ── Single Card (wider and shorter) ── */
 .hm-single-card {
-    width: clamp(400px, 55vw, 700px) !important;
+    width: clamp(500px, 65vw, 800px) !important;
+    border-radius: 24px !important;
 }
 
 .hm-single-card .hm-proj-img-wrap {
-    aspect-ratio: 21/9 !important;
+    aspect-ratio: 28/9 !important;
 }
 
 [data-theme="dark"] .hm-proj-card {

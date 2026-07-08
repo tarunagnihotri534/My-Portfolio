@@ -39,7 +39,7 @@ const HERO_PROJECTS = [
     subtitle: 'Dark-themed Esports Landing Page',
     thumb: '/r4venous-thumb.png',
     tags: ['GSAP', 'Lenis', 'React'],
-    live: null,
+    live: 'https://r4venous-esports-j2hlb7uov-darktarunyt-7908s-projects.vercel.app/',
     rotate: 9,
   },
   {
@@ -278,7 +278,7 @@ export function HeroSection({ introDone }) {
           </div>
 
           {/* Centre — resume */}
-          <a href="/RESUME.pdf" download="Tarun_Agnihotri_Resume.pdf" className="hm-resume-link">
+          <a href="/TARUN.pdf" download="TARUN.pdf" className="hm-resume-link">
             FETCH // RESUME
           </a>
 

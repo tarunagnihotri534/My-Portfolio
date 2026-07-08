@@ -49,7 +49,7 @@ const PROJECTS = [
       'A high-performance, animation-driven esports landing page built with GSAP, Lenis, and modern web technologies. Designed with immersive scroll animations, cinematic transitions, and smooth interactions to deliver a bold, premium user experience while maintaining excellent performance and responsiveness.',
     tags: ['React', 'GSAP', 'Lenis', 'JavaScript', 'CSS'],
     thumb: '/r4venous-thumb.png',
-    live: null,
+    live:  'https://r4venous-esports-j2hlb7uov-darktarunyt-7908s-projects.vercel.app/',
     featured: false,
   },
   {
@@ -60,7 +60,7 @@ const PROJECTS = [
       'A modern food discovery and ordering experience with curated restaurant recommendations, real-time menus, and a delightful UI.',
     tags: ['React', 'Tailwind CSS', 'Node JS', 'Express'],
     thumb: '/2yum-thumb.png',
-    live: null,
+    live: 'https://2-yum-hamburgers-ogs8k80v0-darktarunyt-7908s-projects.vercel.app/',
     featured: false,
   },
 ];
