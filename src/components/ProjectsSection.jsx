@@ -77,34 +77,116 @@ const ArrowIcon = () => (
 /* ─── Featured project (first card, full-width spotlight) ─── */
 function FeaturedProject({ project, imgRef, infoRef }) {
   return (
-    <div className="pv2-featured">
+    <div className="pv2-featured" style={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: '1.5rem',
+      backgroundColor: 'var(--card-bg)',
+      border: '1px solid var(--border-color)',
+      borderRadius: '16px',
+      overflow: 'hidden',
+      padding: '1.5rem'
+    }}>
       {/* Ghost number watermark */}
-      <span className="pv2-ghost-num" aria-hidden="true">01</span>
+      <span className="pv2-ghost-num" style={{
+        position: 'absolute',
+        top: '1rem',
+        right: '1rem',
+        fontSize: '4rem',
+        fontWeight: '700',
+        color: 'rgba(255,255,255,0.05)',
+        pointerEvents: 'none'
+      }} aria-hidden="true">01</span>
 
-      {/* Left — image */}
-      <div ref={imgRef} className="pv2-featured-img-wrap">
-        <div className="pv2-featured-img-clip">
-          <img
-            src={project.thumb}
-            alt={project.name}
-            className="pv2-featured-img"
-          />
-        </div>
-        <span className="pv2-featured-badge">★ Featured</span>
+      {/* Top — image */}
+      <div ref={imgRef} className="pv2-featured-img-wrap" style={{
+        position: 'relative',
+        width: '100%',
+        borderRadius: '12px',
+        overflow: 'hidden'
+      }}>
+        <img
+          src={project.thumb}
+          alt={project.name}
+          className="pv2-featured-img"
+          style={{
+            width: '100%',
+            height: 'auto',
+            objectFit: 'cover',
+            display: 'block'
+          }}
+        />
+        <span className="pv2-featured-badge" style={{
+          position: 'absolute',
+          top: '12px',
+          left: '12px',
+          padding: '0.25rem 0.75rem',
+          backgroundColor: 'var(--accent)',
+          color: '#fff',
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          borderRadius: '9999px'
+        }}>★ Featured</span>
       </div>
 
-      {/* Right — info */}
-      <div ref={infoRef} className="pv2-featured-info">
-        <p className="pv2-label">{project.id} / PROJECT</p>
-        <h3 className="pv2-featured-name">{project.name}</h3>
-        <p className="pv2-featured-sub">{project.subtitle}</p>
-        <p className="pv2-featured-desc">{project.description}</p>
-        <div className="pv2-tags">
-          {project.tags.map(t => <span key={t} className="pv2-tag">{t}</span>)}
+      {/* Bottom — info */}
+      <div ref={infoRef} className="pv2-featured-info" style={{
+        textAlign: 'left'
+      }}>
+        <p className="pv2-label" style={{
+          fontSize: '0.75rem',
+          fontWeight: '600',
+          color: 'var(--accent)',
+          marginBottom: '0.5rem',
+          textTransform: 'uppercase',
+          letterSpacing: '0.05em'
+        }}>{project.id} / PROJECT</p>
+        <h3 className="pv2-featured-name" style={{
+          fontSize: '1.75rem',
+          fontWeight: '700',
+          color: 'var(--text-primary)',
+          marginBottom: '0.5rem',
+          lineHeight: '1.2'
+        }}>{project.name}</h3>
+        <p className="pv2-featured-sub" style={{
+          fontSize: '1rem',
+          color: 'var(--text-secondary)',
+          marginBottom: '0.75rem'
+        }}>{project.subtitle}</p>
+        <p className="pv2-featured-desc" style={{
+          fontSize: '0.9rem',
+          color: 'var(--text-muted)',
+          lineHeight: '1.6',
+          marginBottom: '1rem'
+        }}>{project.description}</p>
+        <div className="pv2-tags" style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '0.5rem',
+          marginBottom: '1rem'
+        }}>
+          {project.tags.map(t => (
+            <span key={t} className="pv2-tag" style={{
+              fontSize: '0.75rem',
+              padding: '0.25rem 0.75rem',
+              backgroundColor: 'rgba(255,255,255,0.1)',
+              borderRadius: '9999px',
+              color: 'var(--text-secondary)'
+            }}>{t}</span>
+          ))}
         </div>
         {project.live && (
-          <a href={project.live} target="_blank" rel="noreferrer" className="pv2-view-case">
-            View case <ArrowIcon />
+          <a href={project.live} target="_blank" rel="noreferrer" className="pv2-view-case" style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            fontSize: '0.9rem',
+            fontWeight: '600',
+            color: 'var(--accent)',
+            textDecoration: 'none',
+            transition: 'color 0.2s ease'
+          }}>
+            View Project <ArrowIcon />
           </a>
         )}
       </div>
@@ -114,48 +196,26 @@ function FeaturedProject({ project, imgRef, infoRef }) {
 
 /* ─── Grid card (remaining projects) ─── */
 function ProjectCard({ project, cardRef }) {
-  const innerRef = useRef(null);
   const localCardRef = useRef(null);
 
   useEffect(() => {
-    const innerEl = innerRef.current;
     const cardEl = localCardRef.current;
-    if (!innerEl || !cardEl) return;
+    if (!cardEl) return;
 
-    // Hover flip effect (on inner element)
+    // Simple hover scale effect
     const onEnter = () => {
-      gsap.to(innerEl, { rotationY: 180, duration: 0.6, ease: 'power2.inOut' });
+      gsap.to(cardEl, { scale: 1.02, duration: 0.3, ease: 'power2.out' });
     };
     const onLeave = () => {
-      gsap.to(innerEl, { rotationY: 0, duration: 0.6, ease: 'power2.inOut' });
-      // Reset tilt
-      gsap.to(cardEl, { rotationY: 0, rotationX: 0, duration: 0.5, ease: 'power2.out' });
+      gsap.to(cardEl, { scale: 1, duration: 0.3, ease: 'power2.out' });
     };
 
     cardEl.addEventListener('mouseenter', onEnter);
     cardEl.addEventListener('mouseleave', onLeave);
 
-    // Cursor tilt effect (on outer card element)
-    const xTo = gsap.quickTo(cardEl, 'rotationY', { duration: 0.5, ease: 'power3' });
-    const yTo = gsap.quickTo(cardEl, 'rotationX', { duration: 0.5, ease: 'power3' });
-
-    const onMove = (e) => {
-        const rect = cardEl.getBoundingClientRect();
-        // Calculate mouse position relative to center of card (-1 to 1)
-        const x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
-        const y = ((e.clientY - rect.top) / rect.height) * 2 - 1;
-        
-        // Tilt range: 10 degrees max
-        xTo(x * 10);
-        yTo(-y * 10); // Negative so it tilts towards mouse
-    };
-
-    cardEl.addEventListener('mousemove', onMove);
-
     return () => {
       cardEl.removeEventListener('mouseenter', onEnter);
       cardEl.removeEventListener('mouseleave', onLeave);
-      cardEl.removeEventListener('mousemove', onMove);
     };
   }, []);
 
@@ -167,72 +227,73 @@ function ProjectCard({ project, cardRef }) {
         else if (cardRef) cardRef.current = el;
       }} 
       className="pv2-card" 
-      style={{ perspective: '1200px', backgroundColor: 'transparent', border: 'none', overflow: 'visible' }}
+      style={{ 
+        backgroundColor: 'var(--card-bg)',
+        border: '1px solid var(--border-color)',
+        borderRadius: '16px',
+        overflow: 'hidden',
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+      }}
     >
-      <div 
-        ref={innerRef} 
-        className="pv2-card-inner" 
-        style={{ 
-            width: '100%', 
-            height: '100%', 
-            position: 'relative', 
-            transformStyle: 'preserve-3d',
-            transition: 'box-shadow 0.3s ease',
-            borderRadius: '16px'
-        }}
-      >
-          {/* Front Face */}
-          <div className="pv2-card-face pv2-card-front" style={{
-              position: 'relative',
-              width: '100%',
-              height: '100%',
-              backfaceVisibility: 'hidden',
-              backgroundColor: 'var(--card-bg)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '16px',
-              overflow: 'hidden'
+      <div className="pv2-card-img-wrap" style={{ aspectRatio: '16/10', position: 'relative' }}>
+        <span className="pv2-card-num" style={{
+          position: 'absolute',
+          top: '12px',
+          left: '12px',
+          fontSize: '0.75rem',
+          fontWeight: '700',
+          color: 'rgba(255,255,255,0.5)',
+          zIndex: 1
+        }}>{project.id}</span>
+        <img src={project.thumb} alt={project.name} className="pv2-card-img" style={{
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover'
+        }} />
+      </div>
+      <div className="pv2-card-body" style={{ padding: '1.25rem' }}>
+        <h3 className="pv2-card-name" style={{
+          fontSize: '1.1rem',
+          fontWeight: '700',
+          color: 'var(--text-primary)',
+          marginBottom: '0.5rem',
+          lineHeight: '1.3'
+        }}>{project.name}</h3>
+        <p className="pv2-card-sub" style={{
+          fontSize: '0.875rem',
+          color: 'var(--text-secondary)',
+          marginBottom: '0.75rem'
+        }}>{project.subtitle}</p>
+        <div className="pv2-tags" style={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          gap: '0.5rem',
+          marginBottom: '0.75rem'
+        }}>
+          {project.tags.slice(0, 3).map(t => (
+            <span key={t} className="pv2-tag" style={{
+              fontSize: '0.7rem',
+              padding: '0.25rem 0.5rem',
+              backgroundColor: 'rgba(255,255,255,0.1)',
+              borderRadius: '9999px',
+              color: 'var(--text-secondary)'
+            }}>{t}</span>
+          ))}
+        </div>
+        {project.live && (
+          <a href={project.live} target="_blank" rel="noreferrer" className="pv2-card-link" style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            gap: '0.5rem',
+            fontSize: '0.875rem',
+            fontWeight: '600',
+            color: 'var(--accent)',
+            textDecoration: 'none',
+            transition: 'color 0.2s ease'
           }}>
-            <div className="pv2-card-img-wrap" style={{ aspectRatio: '16/10', borderBottom: '1px solid var(--border-color)' }}>
-                <span className="pv2-card-num">{project.id}</span>
-                <img src={project.thumb} alt={project.name} className="pv2-card-img" />
-            </div>
-            <div className="pv2-card-body">
-                <h3 className="pv2-card-name">{project.name}</h3>
-                <p className="pv2-card-sub">{project.subtitle}</p>
-            </div>
-          </div>
-
-          {/* Back Face */}
-          <div className="pv2-card-face pv2-card-back" style={{
-              position: 'absolute',
-              top: 0,
-              left: 0,
-              width: '100%',
-              height: '100%',
-              backfaceVisibility: 'hidden',
-              transform: 'rotateY(180deg)',
-              backgroundColor: 'var(--card-bg)',
-              border: '1px solid var(--border-color)',
-              borderRadius: '16px',
-              padding: '1.5rem',
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'center',
-              alignItems: 'center',
-              textAlign: 'center',
-              gap: '1rem'
-          }}>
-            <h3 className="pv2-card-name" style={{ color: 'var(--accent)' }}>{project.name}</h3>
-            <p className="pv2-card-desc" style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', lineHeight: '1.6' }}>{project.description}</p>
-            <div className="pv2-tags pv2-tags--sm" style={{ justifyContent: 'center', marginTop: '0.5rem' }}>
-                {project.tags.map(t => <span key={t} className="pv2-tag">{t}</span>)}
-            </div>
-            {project.live && (
-                <a href={project.live} target="_blank" rel="noreferrer" className="pv2-card-link" style={{ marginTop: '1rem' }}>
-                    Live Project <ArrowIcon />
-                </a>
-            )}
-          </div>
+            View Project <ArrowIcon />
+          </a>
+        )}
       </div>
     </div>
   );
@@ -297,12 +358,15 @@ export function ProjectsSection() {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
+      const isMobile = window.innerWidth < 768;
+      
       /* ── Master timeline triggered by section entering viewport ── */
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: 'top 78%',
+          start: isMobile ? 'top 95%' : 'top 78%',
           once: true,
+          toggleActions: 'play none none none',
         },
         defaults: { ease: 'power3.out' },
       });
@@ -392,13 +456,13 @@ export function ProjectsSection() {
 
       /* Parallax on featured image */
       gsap.to(featImgRef.current, {
-        y: -50,
+        y: isMobile ? -25 : -50,
         ease: 'none',
         scrollTrigger: {
           trigger: sectionRef.current,
           start: 'top bottom',
-          end: 'center top',
-          scrub: 1.4,
+          end: isMobile ? 'bottom top' : 'center top',
+          scrub: isMobile ? 1 : 1.4,
         },
       });
     }, sectionRef);

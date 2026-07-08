@@ -1,0 +1,11 @@
+[33m6aac981[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Add Redis, Docker, GSAP logos to skills section
+[33mee06253[m Add Projects page, ScrollToTop, new thumbnails, and UI updates
+[33m7983444[m Update RoadSense project link
+[33m71ad541[m Add RoadSense project to portfolio with updated thumbnail
+[33m5896c83[m Update resume to RESUME.pdf
+[33m599b507[m Add CiviLedger project to portfolio
+[33md069078[m Update contact section with explicit email address
+[33m63f0ce7[m Add CiviLedger project, thumbnail, and fix UI alignments
+[33m7a9474c[m Add contact section and center dock
+[33m5b5c4cd[m Fix image path for Vercel deployment
+[33m2fd36ca[m Initial commit
