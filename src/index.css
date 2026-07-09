@@ -2401,12 +2401,94 @@ ul {
 }
 
 @media (max-width: 640px) {
-    .pv2-grid {
-        grid-template-columns: 1fr;
+    /* ── Reset the full-bleed negative margins — they break on mobile ── */
+    .pv2-section {
+        margin-left: 0;
+        margin-right: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+        overflow: hidden;
+    }
+
+    /* ── Header ── */
+    .pv2-header {
+        margin-bottom: 2rem;
+        text-align: center;
+        padding: 0;
+    }
+
+    /* ── Title row: stack icon below title on very small screens ── */
+    .pv2-title-row {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px;
     }
 
     .pv2-title {
-        font-size: clamp(3.5rem, 18vw, 6rem);
+        font-size: clamp(2.8rem, 14vw, 4.5rem);
+        letter-spacing: -0.02em;
+        word-break: break-word;
+        width: 100%;
+        text-align: center;
+    }
+
+    .pv2-title-icon {
+        width: clamp(24px, 8vw, 36px);
+    }
+
+    .pv2-subtitle {
+        font-size: 0.875rem;
+        padding: 0 0.5rem;
+    }
+
+    /* ── Grid: single column ── */
+    .pv2-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    /* ── Featured card ── */
+    .pv2-featured {
+        padding: 1.25rem 0;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .pv2-featured-name {
+        font-size: clamp(1.5rem, 6vw, 2rem);
+    }
+
+    /* ── CTA row: stack vertically ── */
+    .pv2-cta {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+    }
+
+    .pv2-cta-line {
+        width: 100%;
+        height: 1px;
+    }
+
+    /* ── Hide cursor thumb on touch devices ── */
+    .pv2-cursor-thumb {
+        display: none;
+    }
+}
+
+/* Extra-small devices (≤ 400px) */
+@media (max-width: 400px) {
+    .pv2-title {
+        font-size: clamp(2.4rem, 13vw, 3.5rem);
+    }
+
+    .pv2-section {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .pv2-card-body {
+        padding: 0.9rem 1rem 1rem;
     }
 }
 
@@ -4806,23 +4888,49 @@ body {
 
 /* Extra Small Devices (phones, 320px and up) */
 @media (max-width: 480px) {
-  /* Hero Section */
+  /* Hero Section — make TARUN KUMAR AGNIHOTRI fully visible */
+  .hm-section {
+    padding: 90px 4vw 24px 4vw !important;
+    overflow: hidden !important;
+  }
+
+  /* Reduce skew so text doesn't appear clipped on narrow screens */
+  .hm-text-block {
+    transform: skewX(-4deg) !important;
+  }
+
+  /* Allow both lines to wrap and fill width */
+  .hm-line {
+    white-space: normal !important;
+    word-break: break-word !important;
+    line-height: 0.9 !important;
+  }
+
+  /* Scale sizes so both lines fill the viewport */
   .hm-line-1 {
-    font-size: clamp(2rem, 12vw, 3.5rem) !important;
+    font-size: clamp(2.2rem, 10.5vw, 3.2rem) !important;
   }
   .hm-line-2 {
-    font-size: clamp(1.5rem, 10vw, 2.5rem) !important;
+    font-size: clamp(2.5rem, 12.5vw, 3.8rem) !important;
+    margin-top: 0.15em !important;
   }
+
   .hm-proj-card {
-    max-width: 90vw !important;
+    max-width: 88vw !important;
+    width: 88vw !important;
   }
   .hm-bottom {
     flex-direction: column !important;
-    gap: 1rem !important;
-    padding: 1rem !important;
+    gap: 0.75rem !important;
+    padding: 0.75rem 1rem !important;
+    align-items: center !important;
   }
   .hm-icons {
     justify-content: center !important;
+  }
+  .hm-resume-link,
+  .hm-showcase-btn {
+    font-size: 0.65rem !important;
   }
 
   /* Projects Section */
