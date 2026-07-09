@@ -7,14 +7,21 @@
  *         First name / Last name · Email / Phone · Inquiry type / Subject · Message · Send
  *
  * GSAP: staggered entrance on mount (no ScrollTrigger needed — page-level animation).
- * Form submission: EmailJS (client-side) or plain mailto fallback.
+ * Submission: Firestore (storage) + EmailJS (owner notification email).
  */
-
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { db } from "./firebase";
+import emailjs from '@emailjs/browser';
 import { useRef, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { CursorTrail } from './components/CursorTrail';
 import { BubbleCanvas } from './components/BubbleCanvas';
+
+// ── EmailJS credentials (loaded from .env) ───────────────────────────────────
+const EJS_SERVICE  = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+const EJS_TEMPLATE = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+const EJS_KEY      = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
 export default function ContactPage() {
   const pageRef     = useRef(null);
@@ -34,6 +41,9 @@ export default function ContactPage() {
   useEffect(() => {
     // Scroll to top on mount
     window.scrollTo({ top: 0, behavior: 'instant' });
+
+    // Initialise EmailJS once on mount
+    if (EJS_KEY) emailjs.init({ publicKey: EJS_KEY });
 
     const ctx = gsap.context(() => {
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
@@ -92,46 +102,92 @@ export default function ContactPage() {
     if (errors[name]) setErrors(prev => ({ ...prev, [name]: false }));
   }
 
-  function handleSubmit(e) {
-    e.preventDefault();
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const { firstName, email, message } = form;
-    const newErrors = {
-      firstName: !firstName.trim(),
-      email:     !email.trim(),
-      message:   !message.trim(),
-    };
+  const { firstName, email, message } = form;
 
-    if (newErrors.firstName || newErrors.email || newErrors.message) {
-      setErrors(newErrors);
-      // GSAP shake each invalid field
-      ['firstName', 'email', 'message'].forEach(field => {
-        if (!newErrors[field]) return;
-        const el = document.querySelector(`[name="${field}"]`);
-        if (!el) return;
-        gsap.timeline()
-          .to(el, { x:  8, duration: 0.07, ease: 'power1.inOut' })
-          .to(el, { x: -8, duration: 0.07, ease: 'power1.inOut' })
-          .to(el, { x:  6, duration: 0.06, ease: 'power1.inOut' })
-          .to(el, { x: -6, duration: 0.06, ease: 'power1.inOut' })
-          .to(el, { x:  0, duration: 0.08, ease: 'power2.out' });
-      });
-      return;
+  const newErrors = {
+    firstName: !firstName.trim(),
+    email: !email.trim(),
+    message: !message.trim(),
+  };
+if (newErrors.firstName || newErrors.email || newErrors.message) {
+  setErrors(newErrors);
+
+  ["firstName", "email", "message"].forEach((field) => {
+    if (!newErrors[field]) return;
+
+    const el = document.querySelector(`[name="${field}"]`);
+    if (!el) return;
+
+    gsap.timeline()
+      .to(el, { x: 8, duration: 0.07 })
+      .to(el, { x: -8, duration: 0.07 })
+      .to(el, { x: 6, duration: 0.06 })
+      .to(el, { x: -6, duration: 0.06 })
+      .to(el, { x: 0, duration: 0.08 });
+  });
+
+  return;
+}
+
+  try {
+    setSending(true);
+
+    // ── 1. Save to Firestore (source of truth) ───────────────────────────
+    await addDoc(collection(db, "messages"), {
+      firstName: form.firstName,
+      lastName: form.lastName,
+      email: form.email,
+      phone: form.phone,
+      inquiry: form.inquiry,
+      subject: form.subject,
+      message: form.message,
+      createdAt: serverTimestamp(),
+    });
+
+    // ── 2. Send email notification via EmailJS ───────────────────────────
+    if (EJS_SERVICE && EJS_TEMPLATE && EJS_KEY) {
+      emailjs
+        .send(EJS_SERVICE, EJS_TEMPLATE, {
+          from_name:  `${form.firstName} ${form.lastName}`.trim(),
+          from_email: form.email,
+          phone:      form.phone   || 'Not provided',
+          inquiry:    form.inquiry || 'Not specified',
+          subject:    form.subject || 'No subject',
+          message:    form.message,
+          reply_to:   form.email,
+        })
+        .catch((ejsErr) => {
+          // Don't block UX — log silently if email fails
+          console.warn('EmailJS notification failed:', ejsErr);
+        });
     }
 
-    setErrors({});
-    setSending(true);
-    // Mailto fallback — replace with EmailJS if needed
-    const body = encodeURIComponent(
-      `Name: ${form.firstName} ${form.lastName}\nPhone: ${form.phone}\nInquiry: ${form.inquiry}\nSubject: ${form.subject}\n\n${form.message}`
-    );
-    window.open(
-      `mailto:tarunagnihotri534@gmail.com?subject=${encodeURIComponent(form.subject || 'Portfolio Contact')}&body=${body}`
-    );
-    setSending(false);
     setSent(true);
+
+    setForm({
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      inquiry: "",
+      subject: "",
+      message: "",
+    });
+
     setTimeout(() => setSent(false), 4000);
+
+  } catch (error) {
+    console.error("Firestore Error:", error);
+    console.error("Error Code:", error.code);
+    console.error("Error Message:", error.message);
+    alert(error.message || "Something went wrong. Please try again.");
+  } finally {
+    setSending(false);
   }
+};
 
   return (
     <div ref={pageRef} className="cp-page">

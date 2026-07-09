@@ -1,0 +1,63 @@
+rules_version = '2';
+
+// ===============================================================
+// Assumed Data Model
+// ===============================================================
+//
+// Collection: messages
+// Document ID: auto-generated
+// Fields:
+//   - firstName:  string (required, 1–100 chars) - sender's first name
+//   - lastName:   string (optional, 0–100 chars) - sender's last name
+//   - email:      string (required, valid email) - sender's email
+//   - phone:      string (optional, 0–30 chars)  - sender's phone
+//   - inquiry:    string (optional, enum)         - inquiry type
+//   - subject:    string (optional, 0–200 chars)  - brief subject
+//   - message:    string (required, 1–5000 chars) - message body
+//   - createdAt:  timestamp (required, server-set)
+//
+// ===============================================================
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ── messages ────────────────────────────────────────────────
+    // Public contact form: anyone may create a message.
+    // No reads allowed from the client (admin only via console).
+    // No updates or deletes from the client.
+    match /messages/{messageId} {
+      allow create: if isValidMessage(request.resource.data);
+      allow read, update, delete: if false;
+    }
+
+    // Deny everything else
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
+
+// ── Helper Functions ─────────────────────────────────────────────
+
+function isValidMessage(data) {
+  return data.keys().hasAll(['firstName', 'email', 'message', 'createdAt'])
+      && data.keys().hasOnly(['firstName', 'lastName', 'email', 'phone',
+                              'inquiry', 'subject', 'message', 'createdAt'])
+      // Required string fields
+      && data.firstName is string
+      && data.firstName.size() >= 1
+      && data.firstName.size() <= 100
+      && data.email is string
+      && data.email.size() >= 3
+      && data.email.size() <= 254
+      && data.message is string
+      && data.message.size() >= 1
+      && data.message.size() <= 5000
+      // Optional string fields (if present, must be strings within limits)
+      && (!('lastName' in data) || (data.lastName is string && data.lastName.size() <= 100))
+      && (!('phone'    in data) || (data.phone    is string && data.phone.size()    <= 30))
+      && (!('inquiry'  in data) || (data.inquiry  is string && data.inquiry.size()  <= 50))
+      && (!('subject'  in data) || (data.subject  is string && data.subject.size()  <= 200))
+      // Server timestamp
+      && data.createdAt is timestamp;
+}
