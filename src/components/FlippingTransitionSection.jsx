@@ -123,6 +123,19 @@ export function FlippingTransitionSection() {
         TARUN AGNIHOTRI
       </div>
 
+      {/* Flipping background image overlay */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          backgroundImage: `radial-gradient(circle at center, rgba(10, 10, 10, 0.6) 0%, rgba(10, 10, 10, 0.95) 100%), url('/Screenshot (3048).png')`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          opacity: 0.25,
+          pointerEvents: 'none',
+        }}
+      />
+
       {/* 3D Card Container */}
       <div
         ref={cardRef}
@@ -146,37 +159,58 @@ export function FlippingTransitionSection() {
             position: 'absolute',
             inset: 0,
             backfaceVisibility: 'hidden',
-            background: 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)',
+            backgroundImage: `linear-gradient(180deg, rgba(15, 15, 30, 0.78) 0%, rgba(10, 10, 20, 0.94) 100%), url('/Screenshot (3048).png')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
             borderRadius: '20px',
             padding: '3rem',
             display: 'flex',
             flexDirection: 'column',
             justifyContent: 'center',
             alignItems: 'center',
-            border: '1px solid rgba(255, 255, 255, 0.1)',
-            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.5)',
+            border: '1px solid rgba(255, 255, 255, 0.15)',
+            boxShadow: '0 25px 50px rgba(0, 0, 0, 0.6)',
+            overflow: 'hidden',
           }}
         >
+          <span
+            style={{
+              padding: '0.35rem 1rem',
+              backgroundColor: 'rgba(99, 102, 241, 0.9)',
+              color: '#fff',
+              fontSize: '0.8rem',
+              fontWeight: 600,
+              borderRadius: '9999px',
+              marginBottom: '1.25rem',
+              letterSpacing: '0.06em',
+              textTransform: 'uppercase',
+              boxShadow: '0 4px 14px rgba(99, 102, 241, 0.4)',
+            }}
+          >
+            ★ Featured Autonomous AI Agent
+          </span>
           <h2
             style={{
-              fontSize: 'clamp(2rem, 5vw, 4rem)',
-              fontWeight: 700,
+              fontSize: 'clamp(2.2rem, 5vw, 4rem)',
+              fontWeight: 800,
               color: '#fff',
               marginBottom: '1rem',
               textAlign: 'center',
+              letterSpacing: '-0.02em',
             }}
           >
-            Full Stack AI Developer
+            Jennie — AI Code Reviewer
           </h2>
           <p
             style={{
-              fontSize: 'clamp(1rem, 2vw, 1.5rem)',
-              color: 'rgba(255, 255, 255, 0.7)',
+              fontSize: 'clamp(1rem, 2vw, 1.25rem)',
+              color: 'rgba(255, 255, 255, 0.85)',
               textAlign: 'center',
-              maxWidth: '600px',
+              maxWidth: '680px',
+              lineHeight: 1.6,
             }}
           >
-            Building intelligent digital platforms with modern technologies
+            Jennie is an autonomous, agentic AI code review tool built for modern engineering workflows. Unlike traditional static linters (ESLint, SonarQube).
           </p>
         </div>
 
@@ -207,67 +241,71 @@ export function FlippingTransitionSection() {
                 fontSize: 'clamp(1.5rem, 3vw, 2.5rem)',
                 fontWeight: 600,
                 color: '#fff',
-                marginBottom: '2rem',
+                marginBottom: '1.5rem',
               }}
             >
-              What I Build
+              Jennie Architecture & Workflow
             </h3>
           </div>
 
-          <div className="flip-content-item" style={{ width: '100%', maxWidth: '500px' }}>
+          <div className="flip-content-item" style={{ width: '100%', maxWidth: '560px' }}>
             <div
               style={{
-                padding: '1.5rem',
-                background: 'rgba(255, 255, 255, 0.05)',
+                padding: '1.25rem',
+                background: 'rgba(99, 102, 241, 0.1)',
                 borderRadius: '12px',
                 marginBottom: '1rem',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                border: '1px solid rgba(99, 102, 241, 0.25)',
               }}
             >
-              <h4 style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1.2rem' }}>
-                AI-Powered Applications
+              <h4 style={{ color: '#fff', marginBottom: '0.4rem', fontSize: '1.15rem' }}>
+                Agentic Code Reasoning
               </h4>
-              <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.95rem' }}>
-                Intelligent systems that learn and adapt
+              <p style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '0.9rem', lineHeight: 1.5 }}>
+                Jennie is an autonomous, agentic AI code review tool built for modern engineering workflows. Unlike traditional static linters (ESLint, SonarQube).
               </p>
             </div>
           </div>
 
-          <div className="flip-content-item" style={{ width: '100%', maxWidth: '500px' }}>
+          <div className="flip-content-item" style={{ width: '100%', maxWidth: '560px' }}>
             <div
               style={{
-                padding: '1.5rem',
+                padding: '1.25rem',
                 background: 'rgba(255, 255, 255, 0.05)',
                 borderRadius: '12px',
-                marginBottom: '1rem',
+                marginBottom: '1.25rem',
                 border: '1px solid rgba(255, 255, 255, 0.1)',
               }}
             >
-              <h4 style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1.2rem' }}>
-                Scalable Web Platforms
+              <h4 style={{ color: '#fff', marginBottom: '0.4rem', fontSize: '1.15rem' }}>
+                Multi-File Context & Deep Insights
               </h4>
-              <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.95rem' }}>
-                Production-ready applications from concept to deployment
+              <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.9rem' }}>
+                Analyzes repository architecture, cross-file dependencies, and code health in real-time.
               </p>
             </div>
           </div>
 
-          <div className="flip-content-item" style={{ width: '100%', maxWidth: '500px' }}>
-            <div
+          <div className="flip-content-item" style={{ textAlign: 'center' }}>
+            <a
+              href="https://github.com/tarunagnihotri534/Jennie"
+              target="_blank"
+              rel="noreferrer"
               style={{
-                padding: '1.5rem',
-                background: 'rgba(255, 255, 255, 0.05)',
-                borderRadius: '12px',
-                border: '1px solid rgba(255, 255, 255, 0.1)',
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                padding: '0.6rem 1.5rem',
+                backgroundColor: 'var(--accent, #6366f1)',
+                color: '#fff',
+                borderRadius: '9999px',
+                fontWeight: 600,
+                fontSize: '0.95rem',
+                textDecoration: 'none',
               }}
             >
-              <h4 style={{ color: '#fff', marginBottom: '0.5rem', fontSize: '1.2rem' }}>
-                Real-Time Systems
-              </h4>
-              <p style={{ color: 'rgba(255, 255, 255, 0.6)', fontSize: '0.95rem' }}>
-                Live data processing and interactive experiences
-              </p>
-            </div>
+              Explore Jennie Repository →
+            </a>
           </div>
         </div>
       </div>

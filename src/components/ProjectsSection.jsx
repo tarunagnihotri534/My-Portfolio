@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -21,6 +21,17 @@ const PROJECTS = [
   },
   {
     id: '02',
+    name: 'Jennie',
+    subtitle: 'Autonomous Agentic AI Code Reviewer',
+    description:
+      'Jennie is an autonomous, agentic AI code review tool built for modern engineering workflows. Unlike traditional static linters (ESLint, SonarQube), Jennie deeply understands code context, multi-file changes, and architectural intent.',
+    tags: ['AI Agent', 'Node JS', 'LLMs', 'Code Review', 'Automation'],
+    thumb: '/Screenshot (3048).png',
+    live: 'https://github.com/tarunagnihotri534/Jennie',
+    featured: false,
+  },
+  {
+    id: '03',
     name: 'CiviLedger',
     subtitle: 'Decentralized Public Policy Engine',
     description:
@@ -31,7 +42,7 @@ const PROJECTS = [
     featured: false,
   },
   {
-    id: '03',
+    id: '04',
     name: 'RoadSense',
     subtitle: 'Intelligent Road Condition Detection',
     description:
@@ -39,28 +50,6 @@ const PROJECTS = [
     tags: ['React JS', 'Node JS', 'Supabase', 'Tailwind CSS'],
     thumb: '/roadsense-thumb.png',
     live: 'https://rsai.vercel.app/',
-    featured: false,
-  },
-  {
-    id: '04',
-    name: 'r4venous',
-    subtitle: 'Dark-themed Developer Tool',
-    description:
-      'A high-performance, animation-driven esports landing page built with GSAP, Lenis, and modern web technologies. Designed with immersive scroll animations, cinematic transitions, and smooth interactions to deliver a bold, premium user experience while maintaining excellent performance and responsiveness.',
-    tags: ['React', 'GSAP', 'Lenis', 'JavaScript', 'CSS'],
-    thumb: '/r4venous-thumb.png',
-    live:  'https://r4venous-esports-j2hlb7uov-darktarunyt-7908s-projects.vercel.app/',
-    featured: false,
-  },
-  {
-    id: '05',
-    name: '2yum',
-    subtitle: 'Food Discovery Platform',
-    description:
-      'A modern food discovery and ordering experience with curated restaurant recommendations, real-time menus, and a delightful UI.',
-    tags: ['React', 'Tailwind CSS', 'Node JS', 'Express'],
-    thumb: '/2yum-thumb.png',
-    live: 'https://2-yum-hamburgers-ogs8k80v0-darktarunyt-7908s-projects.vercel.app/',
     featured: false,
   },
 ];
@@ -96,7 +85,7 @@ function FeaturedProject({ project, imgRef, infoRef }) {
         fontWeight: '700',
         color: 'rgba(255,255,255,0.05)',
         pointerEvents: 'none'
-      }} aria-hidden="true">01</span>
+      }} aria-hidden="true">{project.id}</span>
 
       {/* Top — image */}
       <div ref={imgRef} className="pv2-featured-img-wrap" style={{
@@ -353,7 +342,7 @@ export function ProjectsSection() {
   const ctaRef          = useRef(null);
   const projIconRef     = useRef(null);   // project-initiation.png
 
-  const featured   = PROJECTS[0];
+  const featured     = PROJECTS[0];
   const gridProjects = PROJECTS.slice(1);
 
   useEffect(() => {
@@ -394,21 +383,23 @@ export function ProjectsSection() {
       );
 
       /* Featured image — clip reveal from bottom */
-      tl.fromTo(featImgRef.current,
-        { clipPath: 'inset(100% 0% 0% 0%)', opacity: 0 },
-        { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, duration: 0.9, ease: 'power4.inOut' },
-        0.55
-      );
+      if (featImgRef.current) {
+        tl.fromTo(featImgRef.current,
+          { clipPath: 'inset(100% 0% 0% 0%)', opacity: 0 },
+          { clipPath: 'inset(0% 0% 0% 0%)', opacity: 1, duration: 0.9, ease: 'power4.inOut' },
+          0.55
+        );
+      }
 
       /* Featured info stagger */
-      const infoChildren = featInfoRef.current
-        ? Array.from(featInfoRef.current.children)
-        : [];
-      tl.fromTo(infoChildren,
-        { y: 36, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.55, stagger: 0.1 },
-        0.65
-      );
+      if (featInfoRef.current) {
+        const infoChildren = Array.from(featInfoRef.current.children);
+        tl.fromTo(infoChildren,
+          { y: 36, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.55, stagger: 0.1 },
+          0.65
+        );
+      }
 
       /* Grid cards */
       cardRefs.current.forEach((card, i) => {
@@ -421,50 +412,54 @@ export function ProjectsSection() {
       });
 
       /* CTA row */
-      tl.fromTo(ctaRef.current,
-        { y: 24, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5 },
-        1.1
-      );
+      if (ctaRef.current) {
+        tl.fromTo(ctaRef.current,
+          { y: 24, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.5 },
+          1.1
+        );
+      }
 
       /* ── project-initiation icon — spin + bounce loop ── */
-      // Entrance: pop in with the title
-      tl.fromTo(projIconRef.current,
-        { scale: 0, opacity: 0, rotation: -45 },
-        { scale: 1, opacity: 1, rotation: 0, duration: 0.6, ease: 'back.out(2)' },
-        0.4
-      );
-      // ── project-initiation (rocket) — fly up with slight tilt, drift back ─
-      const rocketTl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
-      rocketTl
-        .to(projIconRef.current, {
-          y: -28, x: 8, rotation: 15,
-          duration: 0.4, ease: 'power2.out',
-        })
-        .to(projIconRef.current, {
-          y: -38, x: 14, rotation: 20,
-          duration: 0.25, ease: 'power1.out',
-        })
-        .to(projIconRef.current, {
-          y: -20, x: 8, rotation: 10,
-          duration: 0.18, ease: 'power1.in',
-        })
-        .to(projIconRef.current, {
-          y: 0, x: 0, rotation: 0,
-          duration: 0.5, ease: 'bounce.out',
-        });
+      if (projIconRef.current) {
+        tl.fromTo(projIconRef.current,
+          { scale: 0, opacity: 0, rotation: -45 },
+          { scale: 1, opacity: 1, rotation: 0, duration: 0.6, ease: 'back.out(2)' },
+          0.4
+        );
+        const rocketTl = gsap.timeline({ repeat: -1, repeatDelay: 2 });
+        rocketTl
+          .to(projIconRef.current, {
+            y: -28, x: 8, rotation: 15,
+            duration: 0.4, ease: 'power2.out',
+          })
+          .to(projIconRef.current, {
+            y: -38, x: 14, rotation: 20,
+            duration: 0.25, ease: 'power1.out',
+          })
+          .to(projIconRef.current, {
+            y: -20, x: 8, rotation: 10,
+            duration: 0.18, ease: 'power1.in',
+          })
+          .to(projIconRef.current, {
+            y: 0, x: 0, rotation: 0,
+            duration: 0.5, ease: 'bounce.out',
+          });
+      }
 
       /* Parallax on featured image */
-      gsap.to(featImgRef.current, {
-        y: isMobile ? -25 : -50,
-        ease: 'none',
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',
-          end: isMobile ? 'bottom top' : 'center top',
-          scrub: isMobile ? 1 : 1.4,
-        },
-      });
+      if (featImgRef.current) {
+        gsap.to(featImgRef.current, {
+          y: isMobile ? -25 : -50,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            end: isMobile ? 'bottom top' : 'center top',
+            scrub: isMobile ? 1 : 1.4,
+          },
+        });
+      }
     }, sectionRef);
 
     return () => ctx.revert();
@@ -504,6 +499,7 @@ export function ProjectsSection() {
 
       {/* ── Featured spotlight ── */}
       <FeaturedProject
+        key={featured.id}
         project={featured}
         imgRef={featImgRef}
         infoRef={featInfoRef}
@@ -520,7 +516,18 @@ export function ProjectsSection() {
         ))}
       </div>
 
-
+      {/* ── CTA row / View All Projects button ── */}
+      <div ref={ctaRef} className="pv2-cta" style={{ marginTop: '3rem' }}>
+        <span className="pv2-cta-line" />
+        <div className="pv2-cta-inner">
+          <span className="pv2-cta-label">Explore More</span>
+          <Link to="/projects" className="pv2-cta-btn">
+            View All Projects <ArrowIcon />
+          </Link>
+        </div>
+        <span className="pv2-cta-line" />
+      </div>
     </section>
   );
 }
+

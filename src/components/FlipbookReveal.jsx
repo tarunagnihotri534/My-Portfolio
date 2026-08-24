@@ -11,6 +11,12 @@ const defaultProjects = [
     link: 'https://jan-mitra-tarun.vercel.app/',
   },
   {
+    image: '/Screenshot (3048).png',
+    title: 'Jennie',
+    category: 'AI Agent / Code Review',
+    link: 'https://github.com/tarunagnihotri534/Jennie',
+  },
+  {
     image: '/Screenshot (1920).png',
     title: 'CiviLedger',
     category: 'Web3',
@@ -21,18 +27,6 @@ const defaultProjects = [
     title: 'RoadSense',
     category: 'Mobile AI',
     link: 'https://rsai.vercel.app/',
-  },
-  {
-    image: '/r4venous-thumb.png',
-    title: 'r4venous',
-    category: 'UI/UX',
-    link: null,
-  },
-  {
-    image: '/2yum-thumb.png',
-    title: '2yum',
-    category: 'Frontend',
-    link: null,
   },
 ];
 

@@ -2567,9 +2567,12 @@ body {
 .hm-text-container {
     width: 100%;
     max-width: 100%;
-    overflow: hidden;
+    overflow: visible;
     position: relative;
     z-index: 2;
+    pointer-events: none;
+    padding-left: clamp(8px, 1.5vw, 24px);
+    box-sizing: border-box;
     /* ABOVE the mockup device */
 }
 
@@ -2588,9 +2591,10 @@ body {
 
 .hm-clip {
     overflow: hidden;
-    padding: 0.1em 0;
-    /* prevent clipping ascenders/descenders */
+    padding: 0.15em 0.35em;
+    /* prevent clipping ascenders/descenders and skewed edges */
     width: 100%;
+    box-sizing: border-box;
 }
 
 .hm-line {
@@ -2598,13 +2602,14 @@ body {
     font-weight: 900;
     font-size: clamp(2.5rem, 9vw, 10rem);
     /* Fluid and responsive font size */
-    line-height: 0.85;
+    line-height: 0.88;
     color: var(--hero-text);
     letter-spacing: -0.02em;
     /* Tight letter spacing */
     text-transform: uppercase;
     margin: 0;
     white-space: nowrap;
+    padding-left: 0.05em;
 }
 
 .hm-line-1,
@@ -2670,14 +2675,22 @@ body {
     /* initial rotateZ is set inline via --init-rotate */
 }
 
-/* ── Single Card (wider and shorter) ── */
+/* ── Single Card (natural fit) ── */
 .hm-single-card {
-    width: clamp(500px, 65vw, 800px) !important;
-    border-radius: 24px !important;
+    width: min(90vw, 780px) !important;
+    border-radius: 20px !important;
 }
 
 .hm-single-card .hm-proj-img-wrap {
-    aspect-ratio: 28/9 !important;
+    aspect-ratio: 16 / 9 !important;
+    max-height: 52vh;
+}
+
+.hm-single-card .hm-proj-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
 }
 
 [data-theme="dark"] .hm-proj-card {
@@ -3366,16 +3379,16 @@ body {
 }
 
 /* ── Per-card section wrapper (sticky host) ─────────────────────────────── */
-/* ── Per-card section wrapper (sticky host) ─────────────────────────────── */
 .skill-card-section {
     width: 100%;
     box-sizing: border-box;
     position: sticky;
-    top: 0;
+    top: clamp(80px, 12vh, 110px);
     z-index: calc(10 + var(--stack-index, 0));
     /* Horizontal padding creates the visible page-bg margin on both sides  */
     padding: 0 clamp(24px, 4vw, 64px);
-    background-color: var(--bg-primary);
+    margin-bottom: clamp(80px, 16vh, 160px);
+    background-color: transparent;
     isolation: isolate;
 }
 
@@ -3396,6 +3409,7 @@ body {
     gap: clamp(32px, 4vw, 80px);
     overflow: hidden;
     will-change: transform, opacity;
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.06), 0 20px 40px rgba(0, 0, 0, 0.14);
 }
 
 /* ── Color variants ─────────────────────────────────────────────────────── */
@@ -4512,7 +4526,7 @@ body {
 /* Overflow-hidden wrapper so yPercent clip-reveal works */
 .bp-name-clip {
     overflow: hidden;
-    padding-bottom: 0.06em; /* prevent descender clip on capital letters */
+    padding: 0.35em 0.2em 0.15em 0.2em; /* prevent ascender and descender clipping on script fonts like DarlingtonDemo */
 }
 
 .bp-name {
@@ -4522,7 +4536,7 @@ body {
     color: #ffffff;
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    line-height: 1;
+    line-height: 1.3;
     margin: 0;
     white-space: nowrap;
     /* initial state set by GSAP (yPercent: 110, opacity: 0) */
@@ -4553,6 +4567,7 @@ body {
         white-space: normal;
         text-align: center;
         padding: 0 1rem;
+        line-height: 1.3;
     }
 }
 

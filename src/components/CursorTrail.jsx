@@ -12,11 +12,11 @@ import gsap from 'gsap';
 // Project thumbnails — Screenshot (1920).png included directly
 const THUMBS = [
   '/project-thumb.png',
-  '/roadsense-thumb.png',
+  '/Screenshot (3048).png',
   '/Screenshot (1920).png',
-  '/r4venous-thumb.png',
-  '/2yum-thumb.png',
+  '/roadsense-thumb.png',
   '/project-thumb.png',
+  '/Screenshot (3048).png',
   '/Screenshot (1920).png',
   '/roadsense-thumb.png',
 ];

@@ -17,39 +17,30 @@ const HERO_PROJECTS = [
   },
   {
     id: '02',
+    name: 'Jennie',
+    subtitle: 'Autonomous Agentic AI Code Reviewer',
+    thumb: '/Screenshot (3048).png',
+    tags: ['AI Agent', 'Node JS', 'LLMs'],
+    live: 'https://github.com/tarunagnihotri534/Jennie',
+    rotate: 6,
+  },
+  {
+    id: '03',
     name: 'CiviLedger',
     subtitle: 'Decentralized Public Policy Engine',
     thumb: '/Screenshot (1920).png',
     tags: ['Web3', 'ICP', 'Smart Contracts'],
     live: 'https://civic-ledger-new.vercel.app/',
-    rotate: 6,
+    rotate: -5,
   },
   {
-    id: '03',
+    id: '04',
     name: 'RoadSense',
     subtitle: 'Intelligent Road Condition Detection',
     thumb: '/roadsense-thumb.png',
     tags: ['React JS', 'Supabase', 'Sensors'],
     live: 'https://rsai.vercel.app/',
-    rotate: -5,
-  },
-  {
-    id: '04',
-    name: 'r4venous',
-    subtitle: 'Dark-themed Esports Landing Page',
-    thumb: '/r4venous-thumb.png',
-    tags: ['GSAP', 'Lenis', 'React'],
-    live: 'https://r4venous-esports-j2hlb7uov-darktarunyt-7908s-projects.vercel.app/',
-    rotate: 9,
-  },
-  {
-    id: '05',
-    name: '2yum',
-    subtitle: 'Food Discovery Platform',
-    thumb: '/2yum-thumb.png',
-    tags: ['React', 'Node JS', 'Express'],
-    live: null,
-    rotate: -6,
+    rotate: 7,
   },
 ];
 
@@ -98,12 +89,12 @@ export function HeroSection({ introDone }) {
         0.5
       );
 
-      /* Single card: pop in after name lands */
+      /* Single card: pop in deep in background (small scale, deep Z) */
       if (cardRef.current) {
         tl.fromTo(
           cardRef.current,
-          { scale: 0.8, opacity: 0, rotateZ: -8, y: 30 },
-          { scale: 1, opacity: 1, rotateZ: -5, y: 0,
+          { scale: 0.25, opacity: 0, rotateZ: -12, z: -500, y: 30 },
+          { scale: 0.45, opacity: 0.85, rotateZ: -8, z: -350, y: 0,
             duration: 0.9, ease: 'back.out(1.5)' },
           0.55
         );
@@ -124,18 +115,21 @@ export function HeroSection({ introDone }) {
 
   /* ── Scroll-driven single card animation ── */
   useEffect(() => {
-    if (!introDone || !cardRef.current) return;
+    if (!introDone || !cardRef.current || !wrapperRef.current) return;
 
     const card = cardRef.current;
+    const sticky = stickyRef.current;
+    const lines = [line1Ref.current, line2Ref.current].filter(Boolean);
+    const bottom = bottomRef.current;
 
-    // Build scroll-scrubbed timeline for single card
+    // Build scroll-scrubbed timeline with robust fromTo definitions
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger   : wrapperRef.current,
         start     : 'top top',
-        end       : '+=100%',
+        end       : '+=150%',
         scrub     : 1,
-        pin       : stickyRef.current,
+        pin       : sticky,
         pinSpacing: false,
         anticipatePin: 1,
         onUpdate(self) {
@@ -146,14 +140,40 @@ export function HeroSection({ introDone }) {
       },
     });
 
-    // Card rotates and comes to front on scroll
-    tl.to(card, {
-      rotateZ : 0,
-      scale   : 1.2,
-      z       : 200,
-      ease    : 'power2.inOut',
-      duration: 1,
-    });
+    // Phase 1 (0 -> 0.45): Name fades out & card smoothly untilts into straight position (0deg) and scales to exact natural fit (scale: 1.0)
+    if (lines.length) {
+      tl.fromTo(lines,
+        { opacity: 1, scale: 1, y: 0 },
+        { opacity: 0, scale: 0.85, y: -35, ease: 'power1.out', duration: 0.45 },
+        0
+      );
+    }
+
+    if (bottom) {
+      tl.fromTo(bottom,
+        { opacity: 1, y: 0 },
+        { opacity: 0, y: 20, ease: 'power1.out', duration: 0.35 },
+        0
+      );
+    }
+
+    tl.fromTo(card,
+      { rotateZ: -8, scale: 0.45, z: -350, opacity: 0.85, y: 0, zIndex: 1 },
+      { rotateZ: 0,  scale: 1.0,  z: 0,    opacity: 1,    y: 0, zIndex: 10, ease: 'power1.inOut', duration: 0.45 },
+      0
+    );
+
+    // Phase 2 (0.45 -> 0.70): Hold in full exact view
+    tl.to(card, { duration: 0.25 }, 0.45);
+
+    // Phase 3 (0.70 -> 1.0): Hide hero section completely as user continues scrolling down to next section
+    if (sticky) {
+      tl.fromTo(sticky,
+        { opacity: 1, scale: 1, y: 0 },
+        { opacity: 0, scale: 0.96, y: -60, ease: 'power2.in', duration: 0.3 },
+        0.70
+      );
+    }
 
     return () => {
       tl.scrollTrigger?.kill();

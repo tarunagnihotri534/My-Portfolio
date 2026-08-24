@@ -17,6 +17,15 @@ const SHOWCASE_PROJECTS = [
   },
   {
     id: '02',
+    name: 'Jennie',
+    subtitle: 'Autonomous Agentic AI Code Reviewer',
+    thumb: '/Screenshot (3048).png',
+    tags: ['AI Agent', 'Node JS', 'LLMs'],
+    live: 'https://github.com/tarunagnihotri534/Jennie',
+    color: '#6366f1',
+  },
+  {
+    id: '03',
     name: 'CiviLedger',
     subtitle: 'Decentralized Public Policy Engine',
     thumb: '/Screenshot (1920).png',
@@ -25,31 +34,13 @@ const SHOWCASE_PROJECTS = [
     color: '#059669',
   },
   {
-    id: '03',
+    id: '04',
     name: 'RoadSense',
     subtitle: 'Intelligent Road Condition Detection',
     thumb: '/roadsense-thumb.png',
     tags: ['React JS', 'Supabase', 'Sensors'],
     live: 'https://rsai.vercel.app/',
     color: '#ea580c',
-  },
-  {
-    id: '04',
-    name: 'r4venous',
-    subtitle: 'Dark-themed Developer Tool',
-    thumb: '/r4venous-thumb.png',
-    tags: ['GSAP', 'Lenis', 'React'],
-    live: null,
-    color: '#dc2626',
-  },
-  {
-    id: '05',
-    name: '2yum',
-    subtitle: 'Food Discovery Platform',
-    thumb: '/2yum-thumb.png',
-    tags: ['React', 'Node JS', 'Express'],
-    live: null,
-    color: '#d97706',
   },
 ];
 
