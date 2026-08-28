@@ -10,13 +10,13 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 const PROJECTS = [
   {
     id: '01',
-    name: 'JanMitra',
-    subtitle: 'AI-Powered Civic Support Platform',
+    name: 'ClaimVertex',
+    subtitle: 'Enterprise AI Insurance Claims & SIU Command Platform',
     description:
-      'An AI-driven platform assisting citizens in resolving everyday civic issues — document verification, fraud detection, and government scheme guidance powered by OCR + NLP + ML.',
-    tags: ['React 18', 'Vite 6', 'Node JS', 'Tailwind CSS', 'Framer Motion'],
-    thumb: '/project-thumb.png',
-    live: 'https://jan-mitra-tarun.vercel.app/',
+      'Autonomous, load-bearing Property & Casualty (P&C) claims intelligence platform built to eliminate administrative bottlenecks, slash Straight-Through Processing (STP) payout latency to under 0.9 seconds, and protect insurance carriers against syndicated fraud.',
+    tags: ['RAG', 'Firebase', 'NextJS', 'Python'],
+    thumb: '/Screenshot (3262).png',
+    live: 'https://claim-pilot-orcin.vercel.app/',
     featured: true,
   },
   {

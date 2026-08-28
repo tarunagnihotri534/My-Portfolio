@@ -5,10 +5,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Define the project data type (for clarity)
 const defaultProjects = [
   {
-    image: '/project-thumb.png',
-    title: 'JanMitra',
-    category: 'AI Platform',
-    link: 'https://jan-mitra-tarun.vercel.app/',
+    image: '/Screenshot (3262).png',
+    title: 'ClaimVertex',
+    category: 'AI Insurance Platform',
+    link: 'https://claim-pilot-orcin.vercel.app/',
   },
   {
     image: '/Screenshot (3048).png',

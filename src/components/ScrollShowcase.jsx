@@ -8,12 +8,12 @@ gsap.registerPlugin(ScrollTrigger);
 const SHOWCASE_PROJECTS = [
   {
     id: '01',
-    name: 'JanMitra',
-    subtitle: 'AI-Powered Civic Support Platform',
-    thumb: '/project-thumb.png',
-    tags: ['React 18', 'Node JS', 'ML / OCR'],
-    live: 'https://jan-mitra-tarun.vercel.app/',
-    color: '#7c3aed',
+    name: 'ClaimVertex',
+    subtitle: 'Enterprise AI Insurance Claims & SIU Command Platform',
+    thumb: '/Screenshot (3262).png',
+    tags: ['RAG', 'Firebase', 'NextJS', 'Python'],
+    live: 'https://claim-pilot-orcin.vercel.app/',
+    color: '#0284c7',
   },
   {
     id: '02',

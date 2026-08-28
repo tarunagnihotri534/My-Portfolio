@@ -1,26 +1,24 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { useEffect } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { SiteFooter } from './components/SiteFooter';
 
 const ALL_PROJECTS = [
   {
     id: '01',
-    category: 'AI & ML',
-    title: 'JanMitra',
-    subtitle: 'AI-Powered Civic Support Platform',
+    title: 'ClaimVertex',
+    subtitle: 'Enterprise AI Insurance Claims & SIU Command Platform',
     desc: [
-      'An AI-driven platform assisting citizens in resolving everyday civic issues.',
-      'Features document verification, fraud detection, and government scheme guidance powered by OCR + NLP + ML.',
-      'Built with React 18, Vite 6, Node JS, Tailwind CSS, and Framer Motion.'
+      'ClaimVertex is an autonomous, load-bearing Property & Casualty (P&C) claims intelligence platform built to eliminate administrative bottlenecks, slash Straight-Through Processing (STP) payout latency to under 0.9 seconds, and protect insurance carriers against syndicated fraud.',
+      'Features sub-second deterministic coverage validation, multi-carrier duplicate billing detection, NOAA Doppler weather validation, and EXIF metadata audit.',
+      'Built with RAG, Firebase, NextJS, and Python.'
     ],
-    image: '/project-thumb.png',
-    tags: ['React 18', 'Vite 6', 'Node JS', 'Tailwind CSS', 'Framer Motion'],
-    link: 'https://jan-mitra-tarun.vercel.app/'
+    image: '/Screenshot (3262).png',
+    tags: ['RAG', 'Firebase', 'NextJS', 'Python'],
+    link: 'https://claim-pilot-orcin.vercel.app/'
   },
   {
     id: '02',
-    category: 'AI & ML',
     title: 'Jennie',
     subtitle: 'Autonomous Agentic AI Code Reviewer',
     desc: [
@@ -34,7 +32,6 @@ const ALL_PROJECTS = [
   },
   {
     id: '03',
-    category: 'Web3',
     title: 'CiviLedger',
     subtitle: 'Decentralized Public Policy Engine',
     desc: [
@@ -48,7 +45,6 @@ const ALL_PROJECTS = [
   },
   {
     id: '04',
-    category: 'Full-Stack Web',
     title: 'RoadSense',
     subtitle: 'Intelligent Road Condition Detection',
     desc: [
@@ -62,7 +58,6 @@ const ALL_PROJECTS = [
   },
   {
     id: '05',
-    category: 'Full-Stack Web',
     title: 'r4venous',
     subtitle: 'Dark-themed Developer & Esports Platform',
     desc: [
@@ -76,7 +71,6 @@ const ALL_PROJECTS = [
   },
   {
     id: '06',
-    category: 'Full-Stack Web',
     title: '2YUM',
     subtitle: 'Food Discovery & Restaurant Platform',
     desc: [
@@ -90,18 +84,10 @@ const ALL_PROJECTS = [
   }
 ];
 
-const CATEGORIES = ['All', 'AI & ML', 'Web3', 'Full-Stack Web'];
-
 function ProjectsPage() {
-  const [activeCategory, setActiveCategory] = useState('All');
-
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'instant' });
   }, []);
-
-  const filteredProjects = activeCategory === 'All'
-    ? ALL_PROJECTS
-    : ALL_PROJECTS.filter(p => p.category === activeCategory);
 
   return (
     <>
@@ -145,7 +131,7 @@ function ProjectsPage() {
           </span>
         </motion.div>
 
-        <main className="container" style={{ paddingTop: '5.5rem', paddingBottom: '6rem', flex: 1 }}>
+        <main className="projects-container" style={{ paddingTop: '5.5rem', paddingBottom: '6rem', flex: 1 }}>
 
           {/* Header */}
           <motion.div
@@ -153,7 +139,7 @@ function ProjectsPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
             className="projects-header"
-            style={{ marginBottom: '2rem', textAlign: 'center' }}
+            style={{ marginBottom: '3.5rem', textAlign: 'center' }}
           >
             <span className="projects-pill" style={{
               display: 'inline-flex',
@@ -183,124 +169,101 @@ function ProjectsPage() {
             </h1>
           </motion.div>
 
-          {/* Category Filter Tabs */}
-          <motion.div
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            style={{
-              display: 'flex',
-              justifyContent: 'center',
-              flexWrap: 'wrap',
-              gap: '0.6rem',
-              marginBottom: '3.5rem'
-            }}
-          >
-            {CATEGORIES.map(cat => (
-              <button
-                key={cat}
-                onClick={() => setActiveCategory(cat)}
+          {/* Projects 3-Column Grid */}
+          <div className="projects-grid">
+            {ALL_PROJECTS.map((proj, idx) => (
+              <motion.div
+                key={proj.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.08 }}
+                className="project-card"
                 style={{
-                  fontSize: '0.825rem',
-                  fontWeight: 600,
-                  padding: '0.5rem 1.25rem',
-                  borderRadius: '9999px',
-                  border: activeCategory === cat ? '1px solid var(--accent)' : '1px solid var(--border-color)',
-                  backgroundColor: activeCategory === cat ? 'var(--accent)' : 'var(--card-bg)',
-                  color: activeCategory === cat ? '#ffffff' : 'var(--text-secondary)',
-                  cursor: 'pointer',
-                  transition: 'all 0.25s ease'
+                  backgroundColor: 'var(--card-bg)',
+                  border: '1px solid var(--border-color)',
+                  borderRadius: '16px',
+                  overflow: 'hidden',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  height: '100%'
                 }}
               >
-                {cat}
-              </button>
+                <div className="project-image-container" style={{ position: 'relative', overflow: 'hidden' }}>
+                  <span style={{
+                    position: 'absolute',
+                    top: '12px',
+                    left: '12px',
+                    fontSize: '0.75rem',
+                    fontWeight: 800,
+                    padding: '0.25rem 0.6rem',
+                    borderRadius: '9999px',
+                    backgroundColor: 'rgba(0,0,0,0.65)',
+                    color: '#fff',
+                    backdropFilter: 'blur(6px)',
+                    zIndex: 2
+                  }}>
+                    {proj.id}
+                  </span>
+                  <img
+                    src={proj.image}
+                    alt={proj.title}
+                    className="project-image"
+                    style={{
+                      width: '100%',
+                      aspectRatio: '16 / 9',
+                      objectFit: 'cover',
+                      display: 'block'
+                    }}
+                  />
+                </div>
+                <div className="project-content" style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+                  <h2 className="project-card-title" style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
+                    {proj.title}
+                  </h2>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--accent)', fontWeight: 600, marginBottom: '0.9rem' }}>
+                    {proj.subtitle}
+                  </p>
+                  <ul className="project-list" style={{ marginBottom: '1.25rem', flex: 1, paddingLeft: '1.1rem' }}>
+                    {proj.desc.map((bullet, bIdx) => (
+                      <li key={bIdx} style={{ fontSize: '0.825rem', lineHeight: '1.55', marginBottom: '0.5rem' }}>{bullet}</li>
+                    ))}
+                  </ul>
+                  <div className="project-tags" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
+                    {proj.tags.map((tag) => (
+                      <span key={tag} className="project-tag" style={{ fontSize: '0.725rem', padding: '0.25rem 0.65rem' }}>{tag}</span>
+                    ))}
+                  </div>
+                  {proj.link && (
+                    <a
+                      href={proj.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="project-btn"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '0.5rem',
+                        padding: '0.5rem 1.15rem',
+                        backgroundColor: 'var(--accent)',
+                        color: '#ffffff',
+                        borderRadius: '9999px',
+                        fontWeight: 600,
+                        fontSize: '0.825rem',
+                        textDecoration: 'none',
+                        marginTop: 'auto',
+                        alignSelf: 'flex-start',
+                        transition: 'transform 0.2s ease, opacity 0.2s ease'
+                      }}
+                    >
+                      Visit Project
+                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M7 7h10v10M7 17 17 7" />
+                      </svg>
+                    </a>
+                  )}
+                </div>
+              </motion.div>
             ))}
-          </motion.div>
-
-          {/* Projects Grid */}
-          <div className="projects-grid">
-            <AnimatePresence mode="wait">
-              {filteredProjects.map((proj, idx) => (
-                <motion.div
-                  key={proj.id}
-                  layout
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, scale: 0.95 }}
-                  transition={{ duration: 0.5, delay: idx * 0.08 }}
-                  className="project-card"
-                  style={{
-                    backgroundColor: 'var(--card-bg)',
-                    border: '1px solid var(--border-color)',
-                    borderRadius: '16px',
-                    overflow: 'hidden'
-                  }}
-                >
-                  <div className="project-image-container" style={{ position: 'relative', overflow: 'hidden' }}>
-                    <span style={{
-                      position: 'absolute',
-                      top: '12px',
-                      left: '12px',
-                      fontSize: '0.75rem',
-                      fontWeight: 800,
-                      padding: '0.25rem 0.6rem',
-                      borderRadius: '9999px',
-                      backgroundColor: 'rgba(0,0,0,0.65)',
-                      color: '#fff',
-                      backdropFilter: 'blur(6px)',
-                      zIndex: 2
-                    }}>
-                      {proj.id}
-                    </span>
-                    <img src={proj.image} alt={proj.title} className="project-image" style={{ width: '100%', height: 'auto', display: 'block' }} />
-                  </div>
-                  <div className="project-content" style={{ padding: '1.5rem' }}>
-                    <h2 className="project-card-title" style={{ fontSize: '1.3rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
-                      {proj.title}
-                    </h2>
-                    <p style={{ fontSize: '0.875rem', color: 'var(--accent)', fontWeight: 600, marginBottom: '1rem' }}>
-                      {proj.subtitle}
-                    </p>
-                    <ul className="project-list" style={{ marginBottom: '1.25rem' }}>
-                      {proj.desc.map((bullet, bIdx) => (
-                        <li key={bIdx}>{bullet}</li>
-                      ))}
-                    </ul>
-                    <div className="project-tags" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.5rem' }}>
-                      {proj.tags.map((tag) => (
-                        <span key={tag} className="project-tag">{tag}</span>
-                      ))}
-                    </div>
-                    {proj.link && (
-                      <a
-                        href={proj.link}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="project-btn"
-                        style={{
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          gap: '0.5rem',
-                          padding: '0.55rem 1.25rem',
-                          backgroundColor: 'var(--accent)',
-                          color: '#ffffff',
-                          borderRadius: '9999px',
-                          fontWeight: 600,
-                          fontSize: '0.85rem',
-                          textDecoration: 'none',
-                          transition: 'transform 0.2s ease, opacity 0.2s ease'
-                        }}
-                      >
-                        Visit Project
-                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M7 7h10v10M7 17 17 7" />
-                        </svg>
-                      </a>
-                    )}
-                  </div>
-                </motion.div>
-              ))}
-            </AnimatePresence>
           </div>
 
         </main>
