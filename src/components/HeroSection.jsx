@@ -62,47 +62,7 @@ export function HeroSection({ introDone }) {
   const bottomRef   = useRef(null);   // bottom bar
   const cardRef     = useRef(null);   // single project card
   const progressRef = useRef(null);   // thin progress bar
-  const hasAnimated = useRef(false);
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0);
-
-  /* ── Entry animation (runs once after preloader) ── */
-  useEffect(() => {
-    if (!introDone || hasAnimated.current) return;
-    hasAnimated.current = true;
-
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-
-      /* Name lines clip-reveal from bottom up */
-      tl.fromTo(
-        [line1Ref.current, line2Ref.current],
-        { yPercent: 110, opacity: 0 },
-        { yPercent: 0, opacity: 1, duration: 1.0, stagger: 0.12 },
-        0
-      );
-
-      /* Bottom bar slide up */
-      tl.fromTo(
-        bottomRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6 },
-        0.5
-      );
-
-      /* Single card: pop in deep in background (small scale, deep Z) */
-      if (cardRef.current) {
-        tl.fromTo(
-          cardRef.current,
-          { scale: 0.25, opacity: 0, rotateZ: -12, z: -500, y: 30 },
-          { scale: 0.45, opacity: 0.85, rotateZ: -8, z: -350, y: 0,
-            duration: 0.9, ease: 'back.out(1.5)' },
-          0.55
-        );
-      }
-    }, wrapperRef);
-
-    return () => ctx.revert();
-  }, [introDone]);
 
   /* ── Image flipping effect (0.3s interval) ── */
   useEffect(() => {
@@ -115,12 +75,15 @@ export function HeroSection({ introDone }) {
 
   /* ── Scroll-driven single card animation ── */
   useEffect(() => {
-    if (!introDone || !cardRef.current || !wrapperRef.current) return;
+    if (!cardRef.current || !wrapperRef.current) return;
 
     const card = cardRef.current;
     const sticky = stickyRef.current;
     const lines = [line1Ref.current, line2Ref.current].filter(Boolean);
     const bottom = bottomRef.current;
+
+    // Set initial resting state directly
+    gsap.set(card, { rotateZ: -5, scale: 0.45, z: -350, opacity: 0.85 });
 
     // Build scroll-scrubbed timeline with robust fromTo definitions
     const tl = gsap.timeline({
@@ -158,7 +121,7 @@ export function HeroSection({ introDone }) {
     }
 
     tl.fromTo(card,
-      { rotateZ: -8, scale: 0.45, z: -350, opacity: 0.85, y: 0, zIndex: 1 },
+      { rotateZ: -5, scale: 0.45, z: -350, opacity: 0.85, y: 0, zIndex: 1 },
       { rotateZ: 0,  scale: 1.0,  z: 0,    opacity: 1,    y: 0, zIndex: 10, ease: 'power1.inOut', duration: 0.45 },
       0
     );
@@ -173,6 +136,10 @@ export function HeroSection({ introDone }) {
         { opacity: 0, scale: 0.96, y: -60, ease: 'power2.in', duration: 0.3 },
         0.70
       );
+    }
+
+    if (introDone) {
+      ScrollTrigger.refresh();
     }
 
     return () => {

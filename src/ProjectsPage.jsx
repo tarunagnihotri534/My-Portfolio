@@ -67,7 +67,7 @@ const ALL_PROJECTS = [
     ],
     image: '/r4venous-thumb.png',
     tags: ['React', 'GSAP', 'Lenis', 'JavaScript', 'CSS'],
-    link: 'https://r4venous-esports-j2hlb7uov-darktarunyt-7908s-projects.vercel.app/'
+    link: 'https://r4venous-esports.vercel.app/'
   },
   {
     id: '06',
@@ -80,7 +80,7 @@ const ALL_PROJECTS = [
     ],
     image: '/2yum-thumb.png',
     tags: ['Next JS', 'React', 'Tailwind CSS', 'Node JS', 'Express'],
-    link: 'https://2-yum-hamburgers-ogs8k80v0-darktarunyt-7908s-projects.vercel.app/'
+    link: 'https://2-yum-hamburgerss.vercel.app/'
   }
 ];
 

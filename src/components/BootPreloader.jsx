@@ -65,7 +65,7 @@ export function BootPreloader({ onComplete }) {
     }
 
     // Pause after full command, then switch phase
-    cursor += 0.6;  // Increased from 0.38 to match slower typing rhythm
+    cursor += 0.35;
     tl.call(() => setPhase('name'), [], cursor);
 
     // After a rAF (so React has rendered the name DOM), animate it in
@@ -85,7 +85,7 @@ export function BootPreloader({ onComplete }) {
         sub.to(nameEl, {
           yPercent: 0,
           opacity: 1,
-          duration: 0.55,
+          duration: 0.5,
           ease: 'power3.out',
         });
 
@@ -93,14 +93,14 @@ export function BootPreloader({ onComplete }) {
         const proxy = { val: 0 };
         sub.to(
           countEl,
-          { opacity: 1, duration: 0.15, ease: 'none' },
-          '<0.1'
+          { opacity: 1, duration: 0.12, ease: 'none' },
+          '<0.08'
         );
         sub.to(
           proxy,
           {
             val: 100,
-            duration: 1.0,
+            duration: 0.85,
             ease: 'power1.inOut',
             onUpdate() {
               if (countEl)
@@ -110,15 +110,14 @@ export function BootPreloader({ onComplete }) {
           '<'
         );
 
-        // Hold at 100 briefly, then immediately hand off to GridReveal
-        // (NO fade-out here — GridRevealIntro covers the screen next)
-        sub.to({}, { duration: 0.25 });
+        // Immediately hand off to GridReveal with zero dead wait
+        sub.to({}, { duration: 0.08 });
         sub.call(() => {
           onComplete?.();
         });
       },
       [],
-      cursor + 0.1   // Increased from 0.05 to 0.1 to give font more time to load
+      cursor + 0.05
     );
 
     tl.play();
