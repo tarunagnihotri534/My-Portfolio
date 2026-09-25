@@ -238,17 +238,12 @@ function ProjectsPage() {
                   <h2 className="project-card-title" style={{ fontSize: '1.25rem', fontWeight: 700, marginBottom: '0.35rem', color: 'var(--text-primary)' }}>
                     {proj.title}
                   </h2>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--accent)', fontWeight: 600, marginBottom: '0.9rem' }}>
+                  <p style={{ fontSize: '0.85rem', color: 'var(--text-secondary)', marginBottom: '0.9rem' }}>
                     {proj.subtitle}
                   </p>
-                  <ul className="project-list" style={{ marginBottom: '1.25rem', flex: 1, paddingLeft: '1.1rem' }}>
-                    {proj.desc.map((bullet, bIdx) => (
-                      <li key={bIdx} style={{ fontSize: '0.825rem', lineHeight: '1.55', marginBottom: '0.5rem' }}>{bullet}</li>
-                    ))}
-                  </ul>
-                  <div className="project-tags" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', marginBottom: '1.25rem' }}>
+                  <div className="project-tags" style={{ display: 'flex', flexWrap: 'wrap', gap: '0.35rem', marginBottom: '1.25rem' }}>
                     {proj.tags.map((tag) => (
-                      <span key={tag} className="project-tag" style={{ fontSize: '0.725rem', padding: '0.25rem 0.65rem' }}>{tag}</span>
+                      <span key={tag} className="project-tag" style={{ fontSize: '0.725rem', padding: '0.2rem 0.6rem' }}>{tag}</span>
                     ))}
                   </div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginTop: 'auto', flexWrap: 'wrap' }}>
