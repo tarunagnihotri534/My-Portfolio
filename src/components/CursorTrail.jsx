@@ -12,13 +12,13 @@ import gsap from 'gsap';
 // Project thumbnails — Screenshot (1920).png included directly
 const THUMBS = [
   '/Screenshot (3262).png',
+  '/Screenshot (3726).png',
   '/Screenshot (3048).png',
   '/Screenshot (1920).png',
   '/roadsense-thumb.png',
   '/Screenshot (3262).png',
+  '/Screenshot (3726).png',
   '/Screenshot (3048).png',
-  '/Screenshot (1920).png',
-  '/roadsense-thumb.png',
 ];
 
 const TILE_COUNT = 8;

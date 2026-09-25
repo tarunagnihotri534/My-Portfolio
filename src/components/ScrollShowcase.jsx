@@ -8,6 +8,15 @@ gsap.registerPlugin(ScrollTrigger);
 const SHOWCASE_PROJECTS = [
   {
     id: '01',
+    name: 'HealDroid',
+    subtitle: 'APK Security Assessment & SAST Platform',
+    thumb: '/Screenshot (3726).png',
+    tags: ['React', 'Next js', 'React native', 'Render'],
+    live: 'https://heal-droid.onrender.com/',
+    color: '#0d9488',
+  },
+  {
+    id: '02',
     name: 'ClaimVertex',
     subtitle: 'Enterprise AI Insurance Claims & SIU Command Platform',
     thumb: '/Screenshot (3262).png',
@@ -16,7 +25,7 @@ const SHOWCASE_PROJECTS = [
     color: '#0284c7',
   },
   {
-    id: '02',
+    id: '03',
     name: 'Jennie',
     subtitle: 'Autonomous Agentic AI Code Reviewer',
     thumb: '/Screenshot (3048).png',
@@ -25,7 +34,7 @@ const SHOWCASE_PROJECTS = [
     color: '#6366f1',
   },
   {
-    id: '03',
+    id: '04',
     name: 'CiviLedger',
     subtitle: 'Decentralized Public Policy Engine',
     thumb: '/Screenshot (1920).png',
@@ -34,7 +43,7 @@ const SHOWCASE_PROJECTS = [
     color: '#059669',
   },
   {
-    id: '04',
+    id: '05',
     name: 'RoadSense',
     subtitle: 'Intelligent Road Condition Detection',
     thumb: '/roadsense-thumb.png',

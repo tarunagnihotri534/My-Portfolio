@@ -10,6 +10,18 @@ gsap.registerPlugin(ScrollTrigger, SplitText);
 const PROJECTS = [
   {
     id: '01',
+    name: 'HealDroid',
+    subtitle: 'APK Security Assessment & SAST Platform',
+    description:
+      'HealDroid is an advanced static application security testing (SAST) platform engineered specifically for Android APKs. It combines binary manifest parsing, high-throughput JADX decompilation, a declarative multi-pattern AST & compound rule engine, weighted OWASP risk scoring, and instant developer remediation snippets within a responsive mobile-first dashboard.',
+    tags: ['React', 'Next.js', 'React Native', 'Cloudflare', 'Render', 'Radix UI'],
+    thumb: '/Screenshot (3726).png',
+    live: 'https://heal-droid.onrender.com/',
+    github: 'https://github.com/tarunagnihotri534/HealDroid',
+    featured: true,
+  },
+  {
+    id: '02',
     name: 'ClaimVertex',
     subtitle: 'Enterprise AI Insurance Claims & SIU Command Platform',
     description:
@@ -17,10 +29,11 @@ const PROJECTS = [
     tags: ['RAG', 'Firebase', 'NextJS', 'Python'],
     thumb: '/Screenshot (3262).png',
     live: 'https://claim-pilot-orcin.vercel.app/',
-    featured: true,
+    objectPosition: 'left top',
+    featured: false,
   },
   {
-    id: '02',
+    id: '03',
     name: 'Jennie',
     subtitle: 'Autonomous Agentic AI Code Reviewer',
     description:
@@ -28,10 +41,11 @@ const PROJECTS = [
     tags: ['AI Agent', 'Node JS', 'LLMs', 'Code Review', 'Automation'],
     thumb: '/Screenshot (3048).png',
     live: 'https://github.com/tarunagnihotri534/Jennie',
+    github: 'https://github.com/tarunagnihotri534/Jennie',
     featured: false,
   },
   {
-    id: '03',
+    id: '04',
     name: 'CiviLedger',
     subtitle: 'Decentralized Public Policy Engine',
     description:
@@ -42,7 +56,7 @@ const PROJECTS = [
     featured: false,
   },
   {
-    id: '04',
+    id: '05',
     name: 'RoadSense',
     subtitle: 'Intelligent Road Condition Detection',
     description:
@@ -54,12 +68,19 @@ const PROJECTS = [
   },
 ];
 
-/* ─── Arrow icon ─── */
+/* ─── Icons ─── */
 const ArrowIcon = () => (
   <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
     viewBox="0 0 24 24" fill="none" stroke="currentColor"
     strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
     <path d="M7 7h10v10M7 17 17 7" />
+  </svg>
+);
+
+const GitHubIcon = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+    viewBox="0 0 24 24" fill="currentColor">
+    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
   </svg>
 );
 
@@ -164,20 +185,36 @@ function FeaturedProject({ project, imgRef, infoRef }) {
             }}>{t}</span>
           ))}
         </div>
-        {project.live && (
-          <a href={project.live} target="_blank" rel="noreferrer" className="pv2-view-case" style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            fontSize: '0.9rem',
-            fontWeight: '600',
-            color: 'var(--accent)',
-            textDecoration: 'none',
-            transition: 'color 0.2s ease'
-          }}>
-            View Project <ArrowIcon />
-          </a>
-        )}
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem', flexWrap: 'wrap' }}>
+          {project.live && (
+            <a href={project.live} target="_blank" rel="noreferrer" className="pv2-view-case" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              color: 'var(--accent)',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>
+              {project.live.includes('github.com') ? 'GitHub Repo' : 'View Project'} <ArrowIcon />
+            </a>
+          )}
+          {project.github && !project.live?.includes('github.com') && (
+            <a href={project.github} target="_blank" rel="noreferrer" className="pv2-view-case" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.5rem',
+              fontSize: '0.9rem',
+              fontWeight: '600',
+              color: 'var(--text-secondary)',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>
+              <GitHubIcon /> GitHub Repo
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -221,68 +258,93 @@ function ProjectCard({ project, cardRef }) {
         border: '1px solid var(--border-color)',
         borderRadius: '16px',
         overflow: 'hidden',
-        transition: 'transform 0.3s ease, box-shadow 0.3s ease'
+        transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100%'
       }}
     >
-      <div className="pv2-card-img-wrap" style={{ aspectRatio: '16/10', position: 'relative' }}>
-        <span className="pv2-card-num" style={{
-          position: 'absolute',
-          top: '12px',
-          left: '12px',
-          fontSize: '0.75rem',
-          fontWeight: '700',
-          color: 'rgba(255,255,255,0.5)',
-          zIndex: 1
-        }}>{project.id}</span>
-        <img src={project.thumb} alt={project.name} className="pv2-card-img" style={{
-          width: '100%',
-          height: '100%',
-          objectFit: 'cover'
-        }} />
+      <div className="pv2-card-img-wrap" style={{ aspectRatio: '16/9', position: 'relative' }}>
+        <img
+          src={project.thumb}
+          alt={project.name}
+          className="pv2-card-img"
+          style={{
+            width: '100%',
+            height: '100%',
+            objectFit: 'cover',
+            objectPosition: project.objectPosition || 'center top',
+            display: 'block'
+          }}
+        />
       </div>
-      <div className="pv2-card-body" style={{ padding: '1.25rem' }}>
+      <div className="pv2-card-body" style={{ padding: '1.25rem', display: 'flex', flexDirection: 'column', flex: 1 }}>
+        <p className="pv2-label" style={{
+          fontSize: '0.72rem',
+          fontWeight: '600',
+          color: 'var(--accent)',
+          marginBottom: '0.35rem',
+          textTransform: 'uppercase',
+          letterSpacing: '0.05em'
+        }}>{project.id} / PROJECT</p>
         <h3 className="pv2-card-name" style={{
           fontSize: '1.1rem',
           fontWeight: '700',
           color: 'var(--text-primary)',
-          marginBottom: '0.5rem',
+          marginBottom: '0.4rem',
           lineHeight: '1.3'
         }}>{project.name}</h3>
         <p className="pv2-card-sub" style={{
-          fontSize: '0.875rem',
+          fontSize: '0.85rem',
           color: 'var(--text-secondary)',
           marginBottom: '0.75rem'
         }}>{project.subtitle}</p>
         <div className="pv2-tags" style={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '0.5rem',
-          marginBottom: '0.75rem'
+          gap: '0.45rem',
+          marginBottom: '1rem'
         }}>
-          {project.tags.slice(0, 3).map(t => (
+          {project.tags.slice(0, 4).map(t => (
             <span key={t} className="pv2-tag" style={{
               fontSize: '0.7rem',
-              padding: '0.25rem 0.5rem',
+              padding: '0.2rem 0.55rem',
               backgroundColor: 'rgba(255,255,255,0.1)',
               borderRadius: '9999px',
               color: 'var(--text-secondary)'
             }}>{t}</span>
           ))}
         </div>
-        {project.live && (
-          <a href={project.live} target="_blank" rel="noreferrer" className="pv2-card-link" style={{
-            display: 'inline-flex',
-            alignItems: 'center',
-            gap: '0.5rem',
-            fontSize: '0.875rem',
-            fontWeight: '600',
-            color: 'var(--accent)',
-            textDecoration: 'none',
-            transition: 'color 0.2s ease'
-          }}>
-            View Project <ArrowIcon />
-          </a>
-        )}
+        <div className="pv2-card-links" style={{ display: 'flex', alignItems: 'center', gap: '0.85rem', marginTop: 'auto', flexWrap: 'wrap' }}>
+          {project.live && (
+            <a href={project.live} target="_blank" rel="noreferrer" className="pv2-card-link" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              fontSize: '0.825rem',
+              fontWeight: '600',
+              color: 'var(--accent)',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>
+              {project.live.includes('github.com') ? 'GitHub' : 'Live Demo'} <ArrowIcon />
+            </a>
+          )}
+          {project.github && !project.live?.includes('github.com') && (
+            <a href={project.github} target="_blank" rel="noreferrer" className="pv2-card-link" style={{
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '0.35rem',
+              fontSize: '0.825rem',
+              fontWeight: '600',
+              color: 'var(--text-secondary)',
+              textDecoration: 'none',
+              transition: 'color 0.2s ease'
+            }}>
+              <GitHubIcon /> GitHub
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );

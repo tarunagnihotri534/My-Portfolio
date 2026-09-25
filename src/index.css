@@ -2232,7 +2232,7 @@ ul {
 .pv2-card-img-wrap {
     position: relative;
     overflow: hidden;
-    aspect-ratio: 16 / 10;
+    aspect-ratio: 16 / 9;
     background: var(--bg-secondary);
 }
 

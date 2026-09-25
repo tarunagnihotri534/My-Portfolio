@@ -6,6 +6,21 @@ import { SiteFooter } from './components/SiteFooter';
 const ALL_PROJECTS = [
   {
     id: '01',
+    title: 'HealDroid',
+    subtitle: 'APK Security Assessment & SAST Platform',
+    desc: [
+      'HealDroid is an advanced static application security testing (SAST) platform engineered specifically for Android APKs.',
+      'Combines binary manifest parsing, high-throughput JADX decompilation, and a declarative multi-pattern AST & compound rule engine.',
+      'Features weighted OWASP risk scoring and instant developer remediation snippets within a responsive mobile-first dashboard.',
+      'Built with React, Next js, React native, Cloudflare, Render, and Radix ui.'
+    ],
+    image: '/Screenshot (3726).png',
+    tags: ['React', 'Next js', 'React native', 'Cloudflare', 'Render', 'Radix ui'],
+    link: 'https://heal-droid.onrender.com/',
+    github: 'https://github.com/tarunagnihotri534/HealDroid'
+  },
+  {
+    id: '02',
     title: 'ClaimVertex',
     subtitle: 'Enterprise AI Insurance Claims & SIU Command Platform',
     desc: [
@@ -15,10 +30,11 @@ const ALL_PROJECTS = [
     ],
     image: '/Screenshot (3262).png',
     tags: ['RAG', 'Firebase', 'NextJS', 'Python'],
-    link: 'https://claim-pilot-orcin.vercel.app/'
+    link: 'https://claim-pilot-orcin.vercel.app/',
+    objectPosition: 'left top'
   },
   {
-    id: '02',
+    id: '03',
     title: 'Jennie',
     subtitle: 'Autonomous Agentic AI Code Reviewer',
     desc: [
@@ -28,10 +44,11 @@ const ALL_PROJECTS = [
     ],
     image: '/Screenshot (3048).png',
     tags: ['AI Agent', 'Node JS', 'LLMs', 'Code Review', 'Automation'],
-    link: 'https://github.com/tarunagnihotri534/Jennie'
+    link: 'https://github.com/tarunagnihotri534/Jennie',
+    github: 'https://github.com/tarunagnihotri534/Jennie'
   },
   {
-    id: '03',
+    id: '04',
     title: 'CiviLedger',
     subtitle: 'Decentralized Public Policy Engine',
     desc: [
@@ -44,7 +61,7 @@ const ALL_PROJECTS = [
     link: 'https://civic-ledger-new.vercel.app/'
   },
   {
-    id: '04',
+    id: '05',
     title: 'RoadSense',
     subtitle: 'Intelligent Road Condition Detection',
     desc: [
@@ -57,7 +74,7 @@ const ALL_PROJECTS = [
     link: 'https://rsai.vercel.app/'
   },
   {
-    id: '05',
+    id: '06',
     title: 'r4venous',
     subtitle: 'Dark-themed Developer & Esports Platform',
     desc: [
@@ -70,7 +87,7 @@ const ALL_PROJECTS = [
     link: 'https://r4venous-esports.vercel.app/'
   },
   {
-    id: '06',
+    id: '07',
     title: '2YUM',
     subtitle: 'Food Discovery & Restaurant Platform',
     desc: [
@@ -212,6 +229,7 @@ function ProjectsPage() {
                       width: '100%',
                       aspectRatio: '16 / 9',
                       objectFit: 'cover',
+                      objectPosition: proj.objectPosition || 'center top',
                       display: 'block'
                     }}
                   />
@@ -233,34 +251,61 @@ function ProjectsPage() {
                       <span key={tag} className="project-tag" style={{ fontSize: '0.725rem', padding: '0.25rem 0.65rem' }}>{tag}</span>
                     ))}
                   </div>
-                  {proj.link && (
-                    <a
-                      href={proj.link}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="project-btn"
-                      style={{
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        gap: '0.5rem',
-                        padding: '0.5rem 1.15rem',
-                        backgroundColor: 'var(--accent)',
-                        color: '#ffffff',
-                        borderRadius: '9999px',
-                        fontWeight: 600,
-                        fontSize: '0.825rem',
-                        textDecoration: 'none',
-                        marginTop: 'auto',
-                        alignSelf: 'flex-start',
-                        transition: 'transform 0.2s ease, opacity 0.2s ease'
-                      }}
-                    >
-                      Visit Project
-                      <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <path d="M7 7h10v10M7 17 17 7" />
-                      </svg>
-                    </a>
-                  )}
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', marginTop: 'auto', flexWrap: 'wrap' }}>
+                    {proj.link && (
+                      <a
+                        href={proj.link}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="project-btn"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.45rem',
+                          padding: '0.5rem 1.15rem',
+                          backgroundColor: 'var(--accent)',
+                          color: '#ffffff',
+                          borderRadius: '9999px',
+                          fontWeight: 600,
+                          fontSize: '0.825rem',
+                          textDecoration: 'none',
+                          transition: 'transform 0.2s ease, opacity 0.2s ease'
+                        }}
+                      >
+                        {proj.link.includes('github.com') ? 'GitHub' : 'Live Demo'}
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M7 7h10v10M7 17 17 7" />
+                        </svg>
+                      </a>
+                    )}
+                    {proj.github && !proj.link?.includes('github.com') && (
+                      <a
+                        href={proj.github}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="project-btn-secondary"
+                        style={{
+                          display: 'inline-flex',
+                          alignItems: 'center',
+                          gap: '0.45rem',
+                          padding: '0.5rem 1.15rem',
+                          backgroundColor: 'rgba(255, 255, 255, 0.08)',
+                          color: 'var(--text-primary)',
+                          border: '1px solid var(--border-color)',
+                          borderRadius: '9999px',
+                          fontWeight: 600,
+                          fontSize: '0.825rem',
+                          textDecoration: 'none',
+                          transition: 'transform 0.2s ease, opacity 0.2s ease'
+                        }}
+                      >
+                        GitHub Repo
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M7 7h10v10M7 17 17 7" />
+                        </svg>
+                      </a>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             ))}

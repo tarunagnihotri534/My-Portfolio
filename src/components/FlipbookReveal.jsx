@@ -5,6 +5,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Define the project data type (for clarity)
 const defaultProjects = [
   {
+    image: '/Screenshot (3726).png',
+    title: 'HealDroid',
+    category: 'APK Security & SAST',
+    link: 'https://heal-droid.onrender.com/',
+  },
+  {
     image: '/Screenshot (3262).png',
     title: 'ClaimVertex',
     category: 'AI Insurance Platform',
